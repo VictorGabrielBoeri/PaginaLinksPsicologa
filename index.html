@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laura Pereira - Psicóloga</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Seção do perfil -->
+        <div class="profile-section">
+            <div class="profile-image">
+                <img src="img/perfil-mulher.jpg" alt="Laura Pereira" id="profileImg">
+            </div>
+            <h1>Laura Pereira</h1>
+            <p class="subtitle">Psicóloga</p>
+        </div>
+
+        <!-- Seção dos links -->
+        <div class="links-section">
+            <!-- Agendamento -->
+            <div class="link-card appointment-card" id="appointmentBtn">
+                <div class="card-content">
+                    <i class="fas fa-calendar-check"></i>
+                    <div class="card-text">
+                        <h3>Agendar Consulta</h3>
+                        <p>Escolha o melhor dia e horário para você!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WhatsApp -->
+            <div class="link-card whatsapp-card">
+                <div class="card-content">
+                    <i class="fab fa-whatsapp"></i>
+                    <div class="card-text">
+                        <h3>Contato Direto</h3>
+                        <p>Tire suas dúvidas pelo WhatsApp!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instagram -->
+            <div class="link-card instagram-card">
+                <div class="card-content">
+                    <i class="fab fa-instagram"></i>
+                    <div class="card-text">
+                        <h3>Instagram</h3>
+                        <p>Veja os bastidores do trabalho!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfólio -->
+            <div class="link-card portfolio-card">
+                <div class="card-content">
+                    <i class="fas fa-heart"></i>
+                    <div class="card-text">
+                        <h3>Conheça meu trabalho</h3>
+                        <p>Saiba mais sobre minha abordagem terapêutica!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2025 Laura Pereira. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- Modal de Agendamento -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-alt"></i> Agendar Consulta</h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            
+            <div class="modal-body">
+                <div class="step" id="step1">
+                    <h3>Escolha o mês e ano</h3>
+                    <div class="month-year-selector">
+                        <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                        <span id="currentMonth">Janeiro 2025</span>
+                        <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    
+                    <div class="calendar" id="calendar">
+                        <!-- Calendário será gerado dinamicamente -->
+                    </div>
+                    
+                    <button class="btn-next" id="nextToTime" disabled>Próximo: Escolher Horário</button>
+                </div>
+                
+                <div class="step" id="step2" style="display: none;">
+                    <h3>Horários disponíveis</h3>
+                    <p class="selected-date">Data selecionada: <span id="selectedDateText"></span></p>
+                    
+                    <div class="time-slots" id="timeSlots">
+                        <!-- Horários serão gerados dinamicamente -->
+                    </div>
+                    
+                    <div class="step-buttons">
+                        <button class="btn-back" id="backToCalendar">Voltar</button>
+                        <button class="btn-next" id="nextToForm" disabled>Próximo: Dados</button>
+                    </div>
+                </div>
+                
+                <div class="step" id="step3" style="display: none;">
+                    <h3>Seus dados</h3>
+                    <div class="appointment-summary">
+                        <p><strong>Data:</strong> <span id="summaryDate"></span></p>
+                        <p><strong>Horário:</strong> <span id="summaryTime"></span></p>
+                    </div>
+                    
+                    <form id="appointmentForm">
+                        <div class="form-group">
+                            <label for="clientName">Nome completo:</label>
+                            <input type="text" id="clientName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="clientPhone">WhatsApp:</label>
+                            <input type="tel" id="clientPhone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="clientEmail">E-mail:</label>
+                            <input type="email" id="clientEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="appointmentType">Tipo de consulta:</label>
+                            <select id="appointmentType" required>
+                                <option value="">Selecione...</option>
+                                <option value="primeira">Primeira consulta</option>
+                                <option value="retorno">Consulta de retorno</option>
+                                <option value="online">Consulta online</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="observations">Observações (opcional):</label>
+                            <textarea id="observations" rows="3"></textarea>
+                        </div>
+                    </form>
+                    
+                    <div class="step-buttons">
+                        <button class="btn-back" id="backToTime">Voltar</button>
+                        <button class="btn-confirm" id="confirmAppointment">Confirmar Agendamento</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
