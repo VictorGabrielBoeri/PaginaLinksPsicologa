@@ -138,19 +138,19 @@ addVisualEffects();
 
 // Configurações personalizáveis
 const config = {
-    // Informações da Laura Pereira
+    // Informações do Elildson Lima
     personalInfo: {
-        name: 'Laura Pereira',
-        title: 'Psicóloga',
-        photo: 'img/perfil-mulher.jpg' // Caminho para a foto real da Laura
+        name: 'Elildson Lima',
+        title: 'Psicólogo',
+        photo: 'img/perfil.jpg' // Caminho para a foto do Elildson
     },
     
-    // Atualize com os links reais da Laura
+    // Atualize com os links reais do Elildson
     socialLinks: {
-        whatsapp: '5511999999999', // Número da Laura
-        linkedin: 'laura-pereira-psicologa', // Perfil LinkedIn da Laura
-        instagram: 'laurapereira_01', // Como mostrado na imagem
-        portfolio: 'https://laura-pereira-psicologa.com' // Site da Laura
+        whatsapp: '5511999999999', // Número do Elildson
+        linkedin: 'elildson-lima-psicologo', // Perfil LinkedIn do Elildson
+        instagram: 'elildsonlima_psi', // Instagram do Elildson
+        portfolio: 'https://elildson-lima-psicologo.com' // Site do Elildson
     }
 };
 
