@@ -791,3 +791,123 @@ footer {
     background: #4CAF50;
     color: white;
 }
+
+/* Tablets e telas médias */
+@media (max-width: 768px) {
+    .calendar {
+        gap: 6px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .calendar-day {
+        min-height: 38px;
+        font-size: 0.85rem;
+        padding: 8px 4px;
+    }
+    
+    .calendar-header {
+        font-size: 0.8rem;
+        padding: 8px 3px;
+    }
+    
+    .time-slots {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .time-slot {
+        padding: 12px 8px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 15px;
+        max-width: 100%;
+    }
+    
+    .calendar {
+        gap: 4px;
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .calendar-day {
+        min-height: 40px;
+        font-size: 0.8rem;
+        padding: 6px 2px;
+    }
+    
+    .calendar-header {
+        font-size: 0.75rem;
+        padding: 6px 2px;
+    }
+    
+    .time-slots {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .time-slot {
+        padding: 10px 6px;
+        font-size: 0.85rem;
+    }
+    
+    .month-year-selector {
+        margin: 15px 0;
+    }
+    
+    .month-year-selector button {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Smartphones muito pequenos */
+@media (max-width: 360px) {
+    .calendar {
+        gap: 3px;
+        padding: 10px;
+    }
+    
+    .calendar-day {
+        min-height: 28px;
+        font-size: 0.75rem;
+        padding: 4px 1px;
+    }
+    
+    .calendar-header {
+        font-size: 0.7rem;
+        padding: 5px 1px;
+    }
+    
+    .time-slots {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+    
+    .time-slot {
+        padding: 8px 4px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Landscape em dispositivos móveis */
+@media (max-width: 768px) and (orientation: landscape) {
+    .calendar {
+        gap: 5px;
+        padding: 10px;
+    }
+    
+    .calendar-day {
+        min-height: 30px;
+        font-size: 0.8rem;
+    }
+    
+    .time-slots {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

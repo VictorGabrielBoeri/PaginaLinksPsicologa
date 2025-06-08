@@ -53,18 +53,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Confirmar agendamento
-    // Confirmar agendamento
-    confirmAppointment.addEventListener('click', function(event) {
-        event.preventDefault();
+    document.getElementById('confirmAppointment').addEventListener('click', function() {
+        console.log('Botão confirmar clicado');
         
         const appointmentType = document.getElementById('appointmentType').value;
-        const appointmentDate = selectedDate; // Data selecionada no calendário
-        const appointmentTime = selectedTime; // Horário selecionado
+        const appointmentDate = selectedDate;
+        const appointmentTime = selectedTime;
         const clientName = document.getElementById('clientName').value;
         const clientPhone = document.getElementById('clientPhone').value;
+        const clientEmail = document.getElementById('clientEmail').value;
         const observations = document.getElementById('observations').value;
         
-        if (appointmentType && appointmentDate && appointmentTime && clientName && clientPhone) {
+        console.log('Valores:', {
+            appointmentType,
+            appointmentDate,
+            appointmentTime,
+            clientName,
+            clientPhone,
+            clientEmail
+        });
+        
+        if (appointmentType && appointmentDate && appointmentTime && clientName && clientPhone && clientEmail) {
             // NOVA ABORDAGEM: usar split e parseInt para garantir a data correta
             const dateParts = appointmentDate.split('-');
             const year = parseInt(dateParts[0]);
@@ -75,15 +84,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
             
             let message = `Olá! Gostaria de agendar uma consulta:\n\n` +
-                         `📋 Tipo: ${appointmentType}\n` +
-                         `📅 Data: ${formattedDate}\n` +
-                         `🕐 Horário: ${appointmentTime}\n` +
-                         `👤 Nome: ${clientName}\n` +
-                         `📱 Telefone: ${clientPhone}`;
+                         `Tipo: ${appointmentType}\n` +
+                         `Data: ${formattedDate}\n` +
+                         `Horário: ${appointmentTime}\n` +
+                         `Nome: ${clientName}\n` +
+                         `Telefone: ${clientPhone}`;
             
             // Adicionar observações se houver
             if (observations.trim()) {
-                message += `\n📝 Observações: ${observations}`;
+                message += `\nObservações: ${observations}`;
             }
             
             const whatsappUrl = `https://wa.me/5585986106410?text=${encodeURIComponent(message)}`;
@@ -101,7 +110,31 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('step3').style.display = 'none';
             document.getElementById('step1').style.display = 'block';
         } else {
-            alert('Por favor, selecione uma data, horário e preencha todos os campos.');
+            // Substituir alert por Notiflix
+            // Verificar quais campos estão faltando
+            let missingFields = [];
+            
+            if (!appointmentDate) missingFields.push('Data');
+            if (!appointmentTime) missingFields.push('Horário');
+            if (!appointmentType) missingFields.push('Tipo de consulta');
+            if (!clientName) missingFields.push('Nome');
+            if (!clientPhone) missingFields.push('WhatsApp');
+            if (!clientEmail) missingFields.push('E-mail');
+            
+            let message = '⚠️ Preencha todos os campos obrigatórios!';
+            if (missingFields.length > 0) {
+                message += `\n\nCampos faltando: ${missingFields.join(', ')}`;
+            }
+            
+            Notiflix.Notify.warning(message, {
+                timeout: 6000,
+                position: 'center-top',
+                fontSize: '15px',
+                width: '450px',
+                borderRadius: '8px',
+                showOnlyTheLastOne: true,
+                clickToClose: true
+            });
         }
     });
     
