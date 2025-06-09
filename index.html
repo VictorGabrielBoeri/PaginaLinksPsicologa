@@ -10,971 +10,590 @@
     <!-- Notiflix CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-3.2.6.min.css">
     <script>
-        // ========================================
-// CONFIGURAÇÃO DINÂMICA DO SITE
-// ========================================
+        // ===== SCRIPT PARA TORNAR O HTML DINÂMICO =====
+// Este script carrega o config.json e aplica todas as configurações automaticamente
 
-// Função principal para carregar e aplicar configurações do config.json
-async function loadSiteConfig() {
+class DynamicSiteLoader {
+  constructor() {
+    this.config = null;
+    this.configUrl = './config.json';
+    this.init();
+  }
+
+  async init() {
     try {
-        console.log('🔄 Carregando configuração do site...');
-        
-        const response = await fetch('config.json');
-        if (!response.ok) {
-            console.log('⚠️ config.json não encontrado, usando configuração padrão');
-            applyDefaultConfig();
-            return;
-        }
-        
-        const config = await response.json();
-        console.log('✅ Configuração carregada:', config);
-        
-        // Aplicar todas as configurações
-        applyProfileConfig(config.profile);
-        applySocialLinksConfig(config.socialLinks || config.links);
-        applyThemeConfig(config.theme);
-        applyAppointmentConfig(config.appointment);
-        
-        console.log('🎉 Site configurado com sucesso!');
-        
+      await this.loadConfig();
+      this.applyAllConfigurations();
+      this.setupAutoRefresh();
+      console.log('Site dinâmico carregado com sucesso!');
     } catch (error) {
-        console.error('❌ Erro ao carregar configuração:', error);
-        applyDefaultConfig();
+      console.error('Erro ao inicializar site dinâmico:', error);
     }
-}
+  }
 
-// Função para aplicar configuração padrão
-function applyDefaultConfig() {
-    console.log('🔧 Aplicando configuração padrão...');
-    
-    const defaultConfig = {
-        profile: {
-            name: 'Maria Silva',
-            profession: 'Designer Gráfica',
-            image: 'img/perfil.jpg'
-        },
-        socialLinks: {
-            whatsapp: 'https://wa.me/5511999999999',
-            instagram: 'https://instagram.com/mariasilva',
-            portfolio: 'https://portfolio.mariasilva.com'
-        },
-        theme: {
-            primaryColor: '#6366f1',
-            secondaryColor: '#8b5cf6',
-            backgroundColor: '#0f0f23',
-            textColor: '#ffffff'
+  // Carregar configurações do config.json
+  async loadConfig() {
+    try {
+      const response = await fetch(this.configUrl);
+      if (!response.ok) {
+        throw new Error(`Erro ao carregar config: ${response.status}`);
+      }
+      this.config = await response.json();
+      console.log('Configurações carregadas:', this.config);
+      return this.config;
+    } catch (error) {
+      console.error('Erro ao carregar configurações:', error);
+      // Usar configurações padrão se não conseguir carregar
+      this.config = this.getDefaultConfig();
+      return this.config;
+    }
+  }
+
+  // Configurações padrão caso o config.json não seja encontrado
+  getDefaultConfig() {
+    return {
+      siteName: "Meu Site",
+      description: "Descrição do site",
+      profile: {
+        name: "Nome",
+        title: "Título",
+        bio: "Bio",
+        image: "",
+        location: "",
+        experience: ""
+      },
+      theme: {
+        primaryColor: "#6366f1",
+        secondaryColor: "#8b5cf6",
+        backgroundColor: "#0f172a",
+        textColor: "#ffffff",
+        particleColor: "#6366f1",
+        profileBorderColor: "#8b5cf6",
+        linkHoverColor: "#a855f7"
+      },
+      links: [],
+      appointment: {
+        enabled: false,
+        whatsappNumber: "",
+        workingHours: {
+          start: "08:00",
+          end: "18:00"
         }
+      }
     };
+  }
+
+  // Aplicar todas as configurações
+  applyAllConfigurations() {
+    if (!this.config) return;
+
+    this.updatePageTitle();
+    this.updateMetaTags();
+    this.updateProfileInfo();
+    this.updateThemeColors();
+    this.updatePseudoElements();
+    this.updateSocialLinks();
+    this.updateAppointmentSection();
+    this.updateFavicon();
+  }
+
+  // Atualizar título da página
+  updatePageTitle() {
+    if (this.config.siteName) {
+      document.title = this.config.siteName;
+    }
     
-    applyProfileConfig(defaultConfig.profile);
-    applySocialLinksConfig(defaultConfig.socialLinks);
-    applyThemeConfig(defaultConfig.theme);
-}
+    // Atualizar meta description
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta');
+      metaDesc.name = 'description';
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.content = this.config.description || 'Site pessoal';
+  }
 
-// ========================================
-// CONFIGURAÇÃO DO PERFIL
-// ========================================
+  // Atualizar meta tags
+  updateMetaTags() {
+    const updateOrCreateMeta = (property, content) => {
+      let meta = document.querySelector(`meta[property="${property}"]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.property = property;
+        document.head.appendChild(meta);
+      }
+      meta.content = content;
+    };
 
-function applyProfileConfig(profile) {
+    // Open Graph tags
+    updateOrCreateMeta('og:title', this.config.siteName || 'Meu Site');
+    updateOrCreateMeta('og:description', this.config.description || 'Site pessoal');
+    if (this.config.profile?.image) {
+      updateOrCreateMeta('og:image', this.config.profile.image);
+    }
+  }
+
+  // Atualizar informações do perfil
+  updateProfileInfo() {
+    const profile = this.config.profile;
     if (!profile) return;
-    
-    console.log('👤 Aplicando configuração do perfil:', profile);
-    
-    // Atualizar título da página
-    if (profile.name && profile.profession) {
-        document.title = `${profile.name} - ${profile.profession}`;
-        console.log(`📄 Título atualizado: ${document.title}`);
-    }
-    
+
     // Atualizar nome
-    if (profile.name) {
-        const nameElements = document.querySelectorAll('h1');
-        nameElements.forEach(element => {
-            element.textContent = profile.name;
-        });
-        console.log(`✏️ Nome atualizado: ${profile.name}`);
-    }
-    
-    // Atualizar profissão/subtítulo
-    if (profile.profession) {
-        const professionElements = document.querySelectorAll('.subtitle');
-        professionElements.forEach(element => {
-            element.textContent = profile.profession;
-        });
-        console.log(`💼 Profissão atualizada: ${profile.profession}`);
-    }
-    
-    // Atualizar imagem de perfil
+    this.updateElements([
+      '.profile-name', '.name', '.user-name', 
+      '[data-profile="name"]', 'h1.name', '.hero-name'
+    ], profile.name);
+
+    // Atualizar título/especialização
+    this.updateElements([
+      '.profile-title', '.title', '.user-title', 
+      '[data-profile="title"]', '.hero-title', '.subtitle'
+    ], profile.title);
+
+    // Atualizar bio/descrição
+    this.updateElements([
+      '.profile-bio', '.bio', '.user-bio', 
+      '[data-profile="bio"]', '.description', '.about'
+    ], profile.bio);
+
+    // Atualizar localização
+    this.updateElements([
+      '.profile-location', '.location', 
+      '[data-profile="location"]'
+    ], profile.location);
+
+    // Atualizar experiência
+    this.updateElements([
+      '.profile-experience', '.experience', 
+      '[data-profile="experience"]'
+    ], profile.experience);
+
+    // Atualizar foto do perfil
     if (profile.image) {
-        const imgElements = document.querySelectorAll('#profileImg, .profile-image img');
-        imgElements.forEach(element => {
-            element.src = profile.image;
-            element.alt = profile.name || 'Perfil';
-        });
-        console.log(`🖼️ Imagem atualizada: ${profile.image}`);
+      this.updateProfileImages(profile.image, profile.name);
     }
-    
-    // Atualizar biografia se existir
-    if (profile.bio) {
-        const bioElements = document.querySelectorAll('.bio, .description');
-        bioElements.forEach(element => {
-            element.textContent = profile.bio;
-        });
-        console.log(`📝 Biografia atualizada: ${profile.bio}`);
-    }
-}
+  }
 
-// ========================================
-// CONFIGURAÇÃO DOS LINKS SOCIAIS
-// ========================================
-
-function applySocialLinksConfig(socialLinks) {
-    if (!socialLinks) return;
+  // Função auxiliar para atualizar múltiplos elementos
+  updateElements(selectors, content) {
+    if (!content) return;
     
-    console.log('🔗 Aplicando configuração dos links sociais:', socialLinks);
-    
-    // Configurar WhatsApp
-    if (socialLinks.whatsapp) {
-        const whatsappCards = document.querySelectorAll('.whatsapp-card, .link-card[data-type="whatsapp"]');
-        whatsappCards.forEach(card => {
-            card.style.cursor = 'pointer';
-            card.onclick = () => {
-                openLink(socialLinks.whatsapp);
-                trackClick('whatsapp');
-            };
-        });
-        console.log(`📱 WhatsApp configurado: ${socialLinks.whatsapp}`);
-    }
-    
-    // Configurar Instagram
-    if (socialLinks.instagram) {
-        const instagramCards = document.querySelectorAll('.instagram-card, .link-card[data-type="instagram"]');
-        instagramCards.forEach(card => {
-            card.style.cursor = 'pointer';
-            card.onclick = () => {
-                openLink(socialLinks.instagram);
-                trackClick('instagram');
-            };
-        });
-        console.log(`📸 Instagram configurado: ${socialLinks.instagram}`);
-    }
-    
-    // Configurar Portfólio
-    if (socialLinks.portfolio) {
-        const portfolioCards = document.querySelectorAll('.portfolio-card, .link-card[data-type="portfolio"]');
-        portfolioCards.forEach(card => {
-            card.style.cursor = 'pointer';
-            card.onclick = () => {
-                openLink(socialLinks.portfolio);
-                trackClick('portfolio');
-            };
-        });
-        console.log(`💼 Portfólio configurado: ${socialLinks.portfolio}`);
-    }
-    
-    // Configurar LinkedIn
-    if (socialLinks.linkedin) {
-        const linkedinCards = document.querySelectorAll('.linkedin-card, .link-card[data-type="linkedin"]');
-        linkedinCards.forEach(card => {
-            card.style.cursor = 'pointer';
-            card.onclick = () => {
-                openLink(socialLinks.linkedin);
-                trackClick('linkedin');
-            };
-        });
-        console.log(`💼 LinkedIn configurado: ${socialLinks.linkedin}`);
-    }
-    
-    // Configurar outros links personalizados
-    if (Array.isArray(socialLinks.customLinks)) {
-        socialLinks.customLinks.forEach((link, index) => {
-            if (link.url && link.title) {
-                const customCards = document.querySelectorAll(`.custom-link-${index}, .link-card[data-index="${index}"]`);
-                customCards.forEach(card => {
-                    card.style.cursor = 'pointer';
-                    card.onclick = () => {
-                        openLink(link.url);
-                        trackClick(`custom-${index}`);
-                    };
-                    
-                    // Atualizar texto se existir
-                    const titleElement = card.querySelector('h3');
-                    if (titleElement) titleElement.textContent = link.title;
-                    
-                    const descElement = card.querySelector('p');
-                    if (descElement && link.description) descElement.textContent = link.description;
-                });
-                console.log(`🔗 Link customizado ${index} configurado: ${link.title} -> ${link.url}`);
-            }
-        });
-    }
-}
-
-// ========================================
-// CONFIGURAÇÃO DO TEMA
-// ========================================
-
-function applyThemeConfig(theme) {
-    if (!theme) return;
-    
-    console.log('🎨 Aplicando configuração do tema:', theme);
-    
-    const root = document.documentElement;
-    
-    // Aplicar cores do tema
-    if (theme.primaryColor) {
-        root.style.setProperty('--primary-color', theme.primaryColor);
-        console.log(`🎨 Cor primária: ${theme.primaryColor}`);
-    }
-    
-    if (theme.secondaryColor) {
-        root.style.setProperty('--secondary-color', theme.secondaryColor);
-        console.log(`🎨 Cor secundária: ${theme.secondaryColor}`);
-    }
-    
-    if (theme.backgroundColor) {
-        root.style.setProperty('--background-color', theme.backgroundColor);
-        document.body.style.backgroundColor = theme.backgroundColor;
-        console.log(`🎨 Cor de fundo: ${theme.backgroundColor}`);
-    }
-    
-    if (theme.textColor) {
-        root.style.setProperty('--text-color', theme.textColor);
-        document.body.style.color = theme.textColor;
-        console.log(`🎨 Cor do texto: ${theme.textColor}`);
-    }
-    
-    if (theme.accentColor) {
-        root.style.setProperty('--accent-color', theme.accentColor);
-        console.log(`🎨 Cor de destaque: ${theme.accentColor}`);
-    }
-    
-    // Aplicar fonte personalizada
-    if (theme.fontFamily) {
-        root.style.setProperty('--font-family', theme.fontFamily);
-        document.body.style.fontFamily = theme.fontFamily;
-        console.log(`🔤 Fonte: ${theme.fontFamily}`);
-    }
-    
-    // Aplicar bordas arredondadas
-    if (theme.borderRadius) {
-        root.style.setProperty('--border-radius', theme.borderRadius);
-        console.log(`📐 Bordas arredondadas: ${theme.borderRadius}`);
-    }
-}
-
-// ========================================
-// CONFIGURAÇÃO DO AGENDAMENTO
-// ========================================
-
-function applyAppointmentConfig(appointment) {
-    if (!appointment) return;
-    
-    console.log('📅 Aplicando configuração do agendamento:', appointment);
-    
-    // Configurar horários disponíveis
-    if (appointment.availableHours) {
-        window.availableHours = appointment.availableHours;
-        console.log('⏰ Horários disponíveis configurados:', appointment.availableHours);
-    }
-    
-    // Configurar dias da semana disponíveis
-    if (appointment.availableDays) {
-        window.availableDays = appointment.availableDays;
-        console.log('📆 Dias disponíveis configurados:', appointment.availableDays);
-    }
-    
-    // Configurar duração da consulta
-    if (appointment.duration) {
-        window.appointmentDuration = appointment.duration;
-        console.log(`⏱️ Duração da consulta: ${appointment.duration} minutos`);
-    }
-}
-
-// ========================================
-// FUNÇÕES AUXILIARES
-// ========================================
-
-// Função para abrir links
-function openLink(url) {
-    if (!url) return;
-    
-    console.log(`🔗 Abrindo link: ${url}`);
-    
-    // Verificar se é um link do WhatsApp
-    if (url.includes('wa.me') || url.includes('whatsapp.com')) {
-        window.open(url, '_blank');
-        return;
-    }
-    
-    // Verificar se é um link externo
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-        window.open(url, '_blank');
-        return;
-    }
-    
-    // Link interno
-    window.location.href = url;
-}
-
-// Função para rastrear cliques
-function trackClick(linkType) {
-    console.log(`📊 Clique rastreado: ${linkType}`);
-    
-    // Integração com Google Analytics (se disponível)
-    if (typeof gtag !== 'undefined') {
-        gtag('event', 'click', {
-            'event_category': 'social_link',
-            'event_label': linkType
-        });
-    }
-    
-    // Integração com outros sistemas de análise
-    if (typeof analytics !== 'undefined') {
-        analytics.track('Link Clicked', {
-            type: linkType,
-            timestamp: new Date().toISOString()
-        });
-    }
-}
-
-// Função para atualizar imagem de perfil
-function updateProfileImage(newImageUrl) {
-    const imgElements = document.querySelectorAll('#profileImg, .profile-image img');
-    imgElements.forEach(element => {
-        element.src = newImageUrl;
+    selectors.forEach(selector => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(el => {
+        if (el) el.textContent = content;
+      });
     });
-    console.log(`🖼️ Imagem de perfil atualizada: ${newImageUrl}`);
-}
+  }
 
-// Função para recarregar configuração
-function reloadConfig() {
-    console.log('🔄 Recarregando configuração...');
-    loadSiteConfig();
-}
+  // Atualizar imagens do perfil
+  updateProfileImages(imageUrl, altText) {
+    const imageSelectors = [
+      '.profile-image', '.profile-photo img', '.user-image', 
+      '.avatar', '[data-profile="image"]', '.hero-image img'
+    ];
 
-// ========================================
-// INICIALIZAÇÃO
-// ========================================
-
-// Carregar configuração quando a página carregar
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Inicializando site dinâmico...');
-    loadSiteConfig();// ========================================
-// CONFIGURAÇÃO DINÂMICA DO SITE
-// ========================================
-
-// Função principal para carregar e aplicar configurações do config.json
-async function loadSiteConfig() {
-    try {
-        console.log('🔄 Carregando configuração do site...');
-        
-        const response = await fetch('config.json');
-        if (!response.ok) {
-            console.log('⚠️ config.json não encontrado, usando configuração padrão');
-            applyDefaultConfig();
-            return;
+    imageSelectors.forEach(selector => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(el => {
+        if (el) {
+          el.src = imageUrl;
+          el.alt = altText || 'Foto do perfil';
+          el.onerror = () => {
+            console.warn(`Erro ao carregar imagem: ${imageUrl}`);
+            el.style.display = 'none';
+          };
         }
-        
-        const config = await response.json();
-        console.log('✅ Configuração carregada:', config);
-        
-        // Aplicar todas as configurações
-        applyProfileConfig(config.profile);
-        applySocialLinksConfig(config.socialLinks || config.links);
-        applyThemeConfig(config.theme);
-        applyAppointmentConfig(config.appointment);
-        
-        console.log('🎉 Site configurado com sucesso!');
-        
-    } catch (error) {
-        console.error('❌ Erro ao carregar configuração:', error);
-        applyDefaultConfig();
-    }
-}
+      });
+    });
+  }
 
-// Função para aplicar configuração padrão
-function applyDefaultConfig() {
-    console.log('🔧 Aplicando configuração padrão...');
-    
-    const defaultConfig = {
-        profile: {
-            name: 'Maria Silva',
-            profession: 'Designer Gráfica',
-            image: 'img/perfil.jpg'
-        },
-        socialLinks: {
-            whatsapp: 'https://wa.me/5511999999999',
-            instagram: 'https://instagram.com/mariasilva',
-            portfolio: 'https://portfolio.mariasilva.com'
-        },
-        theme: {
-            primaryColor: '#D67373',
-            secondaryColor: '#C55A5A',
-            accentColor: '#8B2635',
-            backgroundColor: '#0f0f23',
-            textColor: '#ffffff'
-        }
-    };
-    
-    applyProfileConfig(defaultConfig.profile);
-    applySocialLinksConfig(defaultConfig.socialLinks);
-    applyThemeConfig(defaultConfig.theme);
-}
-
-// ========================================
-// CONFIGURAÇÃO DO PERFIL
-// ========================================
-
-function applyProfileConfig(profile) {
-    if (!profile) return;
-    
-    console.log('👤 Aplicando configuração do perfil:', profile);
-    
-    // Atualizar título da página
-    if (profile.name && profile.profession) {
-        document.title = `${profile.name} - ${profile.profession}`;
-        console.log(`📄 Título atualizado: ${document.title}`);
-    }
-    
-    // Atualizar nome
-    if (profile.name) {
-        const nameElements = document.querySelectorAll('h1');
-        nameElements.forEach(element => {
-            element.textContent = profile.name;
-        });
-        console.log(`✏️ Nome atualizado: ${profile.name}`);
-    }
-    
-    // Atualizar profissão/subtítulo
-    if (profile.profession) {
-        const professionElements = document.querySelectorAll('.subtitle');
-        professionElements.forEach(element => {
-            element.textContent = profile.profession;
-        });
-        console.log(`💼 Profissão atualizada: ${profile.profession}`);
-    }
-    
-    // Atualizar imagem de perfil
-    if (profile.image) {
-        const imgElements = document.querySelectorAll('#profileImg, .profile-image img');
-        imgElements.forEach(element => {
-            element.src = profile.image;
-            element.alt = profile.name || 'Perfil';
-        });
-        console.log(`🖼️ Imagem atualizada: ${profile.image}`);
-    }
-    
-    // Atualizar biografia se existir
-    if (profile.bio) {
-        const bioElements = document.querySelectorAll('.bio, .description');
-        bioElements.forEach(element => {
-            element.textContent = profile.bio;
-        });
-        console.log(`📝 Biografia atualizada: ${profile.bio}`);
-    }
-}
-
-// ========================================
-// CONFIGURAÇÃO DOS LINKS SOCIAIS
-// ========================================
-
-function applySocialLinksConfig(socialLinks) {
-    if (!socialLinks) return;
-    
-    console.log('🔗 Aplicando configuração dos links sociais:', socialLinks);
-    
-    // Configurar WhatsApp
-    if (socialLinks.whatsapp) {
-        const whatsappCards = document.querySelectorAll('.whatsapp-card, .link-card[data-type="whatsapp"]');
-        whatsappCards.forEach(card => {
-            card.style.cursor = 'pointer';
-            card.onclick = () => {
-                openLink(socialLinks.whatsapp);
-                trackClick('whatsapp');
-            };
-        });
-        console.log(`📱 WhatsApp configurado: ${socialLinks.whatsapp}`);
-    }
-    
-    // Configurar Instagram
-    if (socialLinks.instagram) {
-        const instagramCards = document.querySelectorAll('.instagram-card, .link-card[data-type="instagram"]');
-        instagramCards.forEach(card => {
-            card.style.cursor = 'pointer';
-            card.onclick = () => {
-                openLink(socialLinks.instagram);
-                trackClick('instagram');
-            };
-        });
-        console.log(`📸 Instagram configurado: ${socialLinks.instagram}`);
-    }
-    
-    // Configurar Portfólio
-    if (socialLinks.portfolio) {
-        const portfolioCards = document.querySelectorAll('.portfolio-card, .link-card[data-type="portfolio"]');
-        portfolioCards.forEach(card => {
-            card.style.cursor = 'pointer';
-            card.onclick = () => {
-                openLink(socialLinks.portfolio);
-                trackClick('portfolio');
-            };
-        });
-        console.log(`💼 Portfólio configurado: ${socialLinks.portfolio}`);
-    }
-    
-    // Configurar LinkedIn
-    if (socialLinks.linkedin) {
-        const linkedinCards = document.querySelectorAll('.linkedin-card, .link-card[data-type="linkedin"]');
-        linkedinCards.forEach(card => {
-            card.style.cursor = 'pointer';
-            card.onclick = () => {
-                openLink(socialLinks.linkedin);
-                trackClick('linkedin');
-            };
-        });
-        console.log(`💼 LinkedIn configurado: ${socialLinks.linkedin}`);
-    }
-}
-
-// ========================================
-// CONFIGURAÇÃO DO TEMA COM ::BEFORE
-// ========================================
-
-function applyThemeConfig(theme) {
+  // Atualizar cores do tema
+  updateThemeColors() {
+    const theme = this.config.theme;
     if (!theme) return;
-    
-    console.log('🎨 Aplicando configuração do tema:', theme);
-    
+
     const root = document.documentElement;
     
-    // Aplicar cores do tema
-    if (theme.primaryColor) {
-        root.style.setProperty('--primary-color', theme.primaryColor);
-        console.log(`🎨 Cor primária: ${theme.primaryColor}`);
-    }
-    
-    if (theme.secondaryColor) {
-        root.style.setProperty('--secondary-color', theme.secondaryColor);
-        console.log(`🎨 Cor secundária: ${theme.secondaryColor}`);
-    }
-    
-    if (theme.accentColor) {
-        root.style.setProperty('--accent-color', theme.accentColor);
-        console.log(`🎨 Cor de destaque: ${theme.accentColor}`);
-    }
-    
-    if (theme.backgroundColor) {
-        root.style.setProperty('--background-color', theme.backgroundColor);
-        document.body.style.backgroundColor = theme.backgroundColor;
-        console.log(`🎨 Cor de fundo: ${theme.backgroundColor}`);
-    }
-    
-    if (theme.textColor) {
-        root.style.setProperty('--text-color', theme.textColor);
-        document.body.style.color = theme.textColor;
-        console.log(`🎨 Cor do texto: ${theme.textColor}`);
-    }
-    
-    // ========================================
-    // ATUALIZAR PSEUDO-ELEMENTOS ::BEFORE
-    // ========================================
-    
-    updatePseudoElements(theme);
-    
-    // Aplicar fonte personalizada
-    if (theme.fontFamily) {
-        root.style.setProperty('--font-family', theme.fontFamily);
-        document.body.style.fontFamily = theme.fontFamily;
-        console.log(`🔤 Fonte: ${theme.fontFamily}`);
-    }
-    
-    // Aplicar bordas arredondadas
-    if (theme.borderRadius) {
-        root.style.setProperty('--border-radius', theme.borderRadius);
-        console.log(`📐 Bordas arredondadas: ${theme.borderRadius}`);
-    }
-}
+    // Definir variáveis CSS customizadas
+    const cssVariables = {
+      '--primary-color': theme.primaryColor || '#6366f1',
+      '--secondary-color': theme.secondaryColor || '#8b5cf6',
+      '--background-color': theme.backgroundColor || '#0f172a',
+      '--text-color': theme.textColor || '#ffffff',
+      '--particle-color': theme.particleColor || theme.primaryColor || '#6366f1',
+      '--profile-border-color': theme.profileBorderColor || theme.secondaryColor || '#8b5cf6',
+      '--link-hover-color': theme.linkHoverColor || theme.primaryColor || '#6366f1'
+    };
 
-// ========================================
-// FUNÇÃO PARA ATUALIZAR PSEUDO-ELEMENTOS
-// ========================================
+    // Aplicar variáveis CSS
+    Object.entries(cssVariables).forEach(([property, value]) => {
+      root.style.setProperty(property, value);
+    });
 
-function updatePseudoElements(theme) {
-    console.log('🎭 Atualizando pseudo-elementos ::before...');
-    
-    // Remover estilos dinâmicos anteriores
+    // Aplicar cores diretamente em elementos específicos
+    this.applyDirectColors(theme);
+  }
+
+  // Aplicar cores diretamente em elementos
+  applyDirectColors(theme) {
+    // Fundo do body
+    document.body.style.backgroundColor = theme.backgroundColor || '#0f172a';
+    document.body.style.color = theme.textColor || '#ffffff';
+
+    // Elementos com gradiente
+    const gradientElements = document.querySelectorAll('.gradient-bg, .hero-bg, .background');
+    gradientElements.forEach(el => {
+      el.style.background = `linear-gradient(135deg, ${theme.primaryColor || '#6366f1'}, ${theme.secondaryColor || '#8b5cf6'})`;
+    });
+
+    // Botões primários
+    const primaryButtons = document.querySelectorAll('.btn-primary, .button-primary');
+    primaryButtons.forEach(el => {
+      el.style.backgroundColor = theme.primaryColor || '#6366f1';
+      el.style.borderColor = theme.primaryColor || '#6366f1';
+    });
+
+    // Links e elementos de destaque
+    const accentElements = document.querySelectorAll('.accent, .highlight, a:not(.btn)');
+    accentElements.forEach(el => {
+      el.style.color = theme.primaryColor || '#6366f1';
+    });
+  }
+
+  // Atualizar pseudo-elementos com CSS dinâmico
+  updatePseudoElements() {
+    const theme = this.config.theme;
+    if (!theme) return;
+
+    // Remover estilo anterior
     const existingStyle = document.getElementById('dynamic-pseudo-styles');
     if (existingStyle) {
-        existingStyle.remove();
+      existingStyle.remove();
     }
-    
-    // Criar novo elemento de estilo
+
+    // Criar novo estilo
     const style = document.createElement('style');
     style.id = 'dynamic-pseudo-styles';
     
-    // Cores padrão se não fornecidas
-    const primary = theme.primaryColor || '#D67373';
-    const secondary = theme.secondaryColor || '#C55A5A';
-    const accent = theme.accentColor || '#8B2635';
+    const particleColor = theme.particleColor || theme.primaryColor || '#6366f1';
+    const profileBorderColor = theme.profileBorderColor || theme.secondaryColor || '#8b5cf6';
+    const linkHoverColor = theme.linkHoverColor || theme.primaryColor || '#6366f1';
     
-    // CSS dinâmico para pseudo-elementos
     style.textContent = `
-        /* Atualizar fundo com partículas */
-        body::before {
-            background-image: 
-                radial-gradient(circle at 20% 80%, ${primary}1A 0%, transparent 50%), 
-                radial-gradient(circle at 80% 20%, ${secondary}1A 0%, transparent 50%), 
-                radial-gradient(circle at 40% 40%, ${accent}0D 0%, transparent 50%) !important;
-        }
-        
-        /* Atualizar borda animada da imagem de perfil */
-        .profile-image::before {
-            background: linear-gradient(45deg, ${primary}, ${secondary}, ${accent}) !important;
-        }
-        
-        /* Atualizar efeito de hover nos cards */
-        .link-card::before {
-            background: linear-gradient(90deg, transparent, ${primary}1A, transparent) !important;
-        }
-        
-        /* Atualizar bordas dos cards */
-        .link-card {
-            background: ${primary}14 !important;
-            border: 1px solid ${primary}26 !important;
-        }
-        
-        .link-card:hover {
-            border-color: ${primary}4D !important;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.2), 
-                0 0 30px ${primary}1A !important;
-        }
-        
-        /* Atualizar imagem de perfil */
-        .profile-image {
-            border: 4px solid ${primary}4D !important;
-            box-shadow: 
-                0 0 30px ${primary}33, 
-                0 0 60px ${accent}1A !important;
-        }
-        
-        .profile-image:hover {
-            box-shadow: 
-                0 0 40px ${primary}66, 
-                0 0 80px ${accent}33 !important;
-        }
-        
-        /* Atualizar gradiente do título */
-        h1 {
-            background: linear-gradient(135deg, #fff 0%, ${primary} 50%, ${secondary} 100%) !important;
-            -webkit-background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            background-clip: text !important;
-            text-shadow: 0 0 30px ${primary}4D !important;
-        }
-        
-        /* Atualizar cor do subtítulo */
-        .subtitle {
-            color: ${primary}E6 !important;
-        }
-        
-        /* Atualizar botões */
-        .btn-primary {
-            background: ${primary} !important;
-        }
-        
-        .btn-secondary {
-            background: ${secondary} !important;
-        }
-        
-        /* Atualizar variáveis CSS dinamicamente */
-        :root {
-            --primary-color: ${primary} !important;
-            --secondary-color: ${secondary} !important;
-            --accent-color: ${accent} !important;
-        }
+      /* Partículas de fundo */
+      .background-particles::before,
+      .particles::before,
+      body::before,
+      .hero::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background-image: radial-gradient(circle, ${particleColor}33 1px, transparent 1px) !important;
+        background-size: 50px 50px !important;
+        opacity: 0.3 !important;
+        pointer-events: none !important;
+        z-index: -1 !important;
+      }
+      
+      /* Borda da foto do perfil */
+      .profile-image::before,
+      .profile-photo::before,
+      .avatar::before {
+        content: '' !important;
+        position: absolute !important;
+        top: -3px !important;
+        left: -3px !important;
+        right: -3px !important;
+        bottom: -3px !important;
+        border: 3px solid ${profileBorderColor} !important;
+        border-radius: inherit !important;
+        box-shadow: 0 0 20px ${profileBorderColor}66 !important;
+        z-index: -1 !important;
+      }
+      
+      /* Hover dos links */
+      .link-card:hover::before,
+      .social-link:hover::before,
+      .btn:hover::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: linear-gradient(45deg, ${linkHoverColor}44, ${linkHoverColor}22) !important;
+        border-radius: inherit !important;
+        z-index: -1 !important;
+      }
+      
+      /* Efeitos de brilho */
+      .glow::before {
+        content: '' !important;
+        position: absolute !important;
+        top: -2px !important;
+        left: -2px !important;
+        right: -2px !important;
+        bottom: -2px !important;
+        background: linear-gradient(45deg, ${theme.primaryColor || '#6366f1'}, ${theme.secondaryColor || '#8b5cf6'}) !important;
+        border-radius: inherit !important;
+        filter: blur(10px) !important;
+        opacity: 0.7 !important;
+        z-index: -1 !important;
+      }
     `;
     
-    // Adicionar o estilo ao head
     document.head.appendChild(style);
-    
-    console.log('✅ Pseudo-elementos atualizados com as cores:', {
-        primary,
-        secondary,
-        accent
+  }
+
+  // Atualizar links sociais
+  updateSocialLinks() {
+    const links = this.config.links;
+    if (!links || !Array.isArray(links)) return;
+
+    // Procurar containers de links
+    const linkContainers = document.querySelectorAll([
+      '.social-links', '.links-container', '.social-media',
+      '[data-links]', '.contact-links', '.profile-links'
+    ].join(','));
+
+    linkContainers.forEach(container => {
+      this.renderLinksInContainer(container, links);
     });
-}
+  }
 
-// ========================================
-// CONFIGURAÇÃO DO AGENDAMENTO
-// ========================================
+  // Renderizar links em um container
+  renderLinksInContainer(container, links) {
+    if (!container) return;
 
-function applyAppointmentConfig(appointment) {
+    container.innerHTML = '';
+    
+    const activeLinks = links.filter(link => link.active !== false);
+    
+    activeLinks.forEach(link => {
+      const linkElement = this.createLinkElement(link);
+      container.appendChild(linkElement);
+    });
+  }
+
+  // Criar elemento de link
+  createLinkElement(link) {
+    const linkEl = document.createElement('a');
+    linkEl.href = link.url || '#';
+    linkEl.target = '_blank';
+    linkEl.rel = 'noopener noreferrer';
+    linkEl.className = 'link-card social-link';
+    linkEl.style.cssText = `
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      margin: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      color: ${link.color || this.config.theme?.primaryColor || '#6366f1'};
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    `;
+    
+    // Adicionar ícone
+    if (link.icon) {
+      const icon = document.createElement('i');
+      icon.className = link.icon;
+      icon.style.fontSize = '18px';
+      linkEl.appendChild(icon);
+    }
+    
+    // Adicionar texto
+    const text = document.createElement('span');
+    text.textContent = link.title || 'Link';
+    linkEl.appendChild(text);
+    
+    // Efeitos de hover
+    linkEl.addEventListener('mouseenter', () => {
+      linkEl.style.transform = 'translateY(-2px)';
+      linkEl.style.boxShadow = `0 5px 15px ${link.color || this.config.theme?.primaryColor || '#6366f1'}33`;
+    });
+    
+    linkEl.addEventListener('mouseleave', () => {
+      linkEl.style.transform = 'translateY(0)';
+      linkEl.style.boxShadow = 'none';
+    });
+    
+    return linkEl;
+  }
+
+  // Atualizar seção de agendamento
+  updateAppointmentSection() {
+    const appointment = this.config.appointment;
     if (!appointment) return;
-    
-    console.log('📅 Aplicando configuração do agendamento:', appointment);
-    
-    // Configurar horários disponíveis
-    if (appointment.availableHours) {
-        window.availableHours = appointment.availableHours;
-        console.log('⏰ Horários disponíveis configurados:', appointment.availableHours);
-    }
-    
-    // Configurar dias da semana disponíveis
-    if (appointment.availableDays) {
-        window.availableDays = appointment.availableDays;
-        console.log('📆 Dias disponíveis configurados:', appointment.availableDays);
-    }
-    
-    // Configurar duração da consulta
-    if (appointment.duration) {
-        window.appointmentDuration = appointment.duration;
-        console.log(`⏱️ Duração da consulta: ${appointment.duration} minutos`);
-    }
-}
 
-// ========================================
-// FUNÇÕES AUXILIARES
-// ========================================
+    const appointmentSections = document.querySelectorAll([
+      '.appointment-section', '.booking-section', 
+      '[data-appointment]', '.schedule'
+    ].join(','));
 
-// Função para abrir links
-function openLink(url) {
-    if (!url) return;
-    
-    console.log(`🔗 Abrindo link: ${url}`);
-    
-    // Verificar se é um link do WhatsApp
-    if (url.includes('wa.me') || url.includes('whatsapp.com')) {
-        window.open(url, '_blank');
-        return;
-    }
-    
-    // Verificar se é um link externo
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-        window.open(url, '_blank');
-        return;
-    }
-    
-    // Link interno
-    window.location.href = url;
-}
-
-// Função para rastrear cliques
-function trackClick(linkType) {
-    console.log(`📊 Clique rastreado: ${linkType}`);
-    
-    // Integração com Google Analytics (se disponível)
-    if (typeof gtag !== 'undefined') {
-        gtag('event', 'click', {
-            'event_category': 'social_link',
-            'event_label': linkType
-        });
-    }
-    
-    // Integração com outros sistemas de análise
-    if (typeof analytics !== 'undefined') {
-        analytics.track('Link Clicked', {
-            type: linkType,
-            timestamp: new Date().toISOString()
-        });
-    }
-}
-
-// Função para atualizar imagem de perfil
-function updateProfileImage(newImageUrl) {
-    const imgElements = document.querySelectorAll('#profileImg, .profile-image img');
-    imgElements.forEach(element => {
-        element.src = newImageUrl;
+    appointmentSections.forEach(section => {
+      if (appointment.enabled) {
+        section.style.display = 'block';
+        this.updateAppointmentInfo(section, appointment);
+      } else {
+        section.style.display = 'none';
+      }
     });
-    console.log(`🖼️ Imagem de perfil atualizada: ${newImageUrl}`);
-}
+  }
 
-// Função para recarregar configuração
-function reloadConfig() {
-    console.log('🔄 Recarregando configuração...');
-    loadSiteConfig();
-}
+  // Atualizar informações de agendamento
+  updateAppointmentInfo(section, appointment) {
+    // Atualizar número do WhatsApp
+    const whatsappElements = section.querySelectorAll('.whatsapp-number, [data-whatsapp]');
+    whatsappElements.forEach(el => {
+      if (appointment.whatsappNumber) {
+        el.textContent = appointment.whatsappNumber;
+        el.href = `https://wa.me/${appointment.whatsappNumber.replace(/\D/g, '')}`;
+      }
+    });
 
-// Função para atualizar tema em tempo real
-function updateTheme(newTheme) {
-    console.log('🎨 Atualizando tema em tempo real:', newTheme);
-    applyThemeConfig(newTheme);
-}
+    // Atualizar horários de funcionamento
+    const hoursElements = section.querySelectorAll('.working-hours, [data-hours]');
+    hoursElements.forEach(el => {
+      if (appointment.workingHours) {
+        el.textContent = `${appointment.workingHours.start} - ${appointment.workingHours.end}`;
+      }
+    });
+  }
 
-// ========================================
-// INICIALIZAÇÃO
-// ========================================
-
-// Carregar configuração quando a página carregar
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Inicializando site dinâmico...');
-    loadSiteConfig();
-});
-
-// Recarregar configuração quando a janela ganhar foco (útil para desenvolvimento)
-window.addEventListener('focus', function() {
-    // Só recarrega se estiver em desenvolvimento (localhost)
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        console.log('🔄 Recarregando configuração (modo desenvolvimento)...');
-        setTimeout(loadSiteConfig, 500);
+  // Atualizar favicon
+  updateFavicon() {
+    if (this.config.profile?.image) {
+      let favicon = document.querySelector('link[rel="icon"]');
+      if (!favicon) {
+        favicon = document.createElement('link');
+        favicon.rel = 'icon';
+        document.head.appendChild(favicon);
+      }
+      favicon.href = this.config.profile.image;
     }
-});
+  }
 
-// Expor funções globalmente para depuração
-window.siteConfig = {
-    reload: reloadConfig,
-    updateProfileImage: updateProfileImage,
-    updateTheme: updateTheme,
-    openLink: openLink,
-    trackClick: trackClick
+  // Configurar atualização automática
+  setupAutoRefresh() {
+    // Recarregar configurações a cada 30 segundos
+    setInterval(async () => {
+      try {
+        const oldConfig = JSON.stringify(this.config);
+        await this.loadConfig();
+        const newConfig = JSON.stringify(this.config);
+        
+        // Se houve mudanças, reaplicar configurações
+        if (oldConfig !== newConfig) {
+          console.log('Configurações atualizadas, reaplicando...');
+          this.applyAllConfigurations();
+        }
+      } catch (error) {
+        console.error('Erro ao verificar atualizações:', error);
+      }
+    }, 30000);
+  }
+
+  // Método público para recarregar manualmente
+  async reload() {
+    await this.loadConfig();
+    this.applyAllConfigurations();
+    console.log('Site recarregado manualmente');
+  }
+
+  // Método público para obter configurações atuais
+  getConfig() {
+    return this.config;
+  }
+}
+
+// ===== INICIALIZAÇÃO =====
+// Inicializar quando o DOM estiver pronto
+let siteLoader;
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    siteLoader = new DynamicSiteLoader();
+  });
+} else {
+  siteLoader = new DynamicSiteLoader();
+}
+
+// Expor globalmente para debug
+window.siteLoader = siteLoader;
+
+// ===== CSS ADICIONAL PARA SUPORTE =====
+// Adicionar CSS base para elementos dinâmicos
+const baseStyle = document.createElement('style');
+baseStyle.id = 'dynamic-base-styles';
+baseStyle.textContent = `
+  /* Variáveis CSS base */
+  :root {
+    --primary-color: #6366f1;
+    --secondary-color: #8b5cf6;
+    --background-color: #0f172a;
+    --text-color: #ffffff;
+    --particle-color: #6366f1;
+    --profile-border-color: #8b5cf6;
+    --link-hover-color: #6366f1;
+  }
+  
+  /* Estilos base para elementos dinâmicos */
+  .link-card {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .profile-image,
+  .profile-photo,
+  .avatar {
+    position: relative;
+    border-radius: 50%;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .link-card {
+      padding: 10px 15px;
+      margin: 3px;
+    }
+  }
+`;
+
+document.head.appendChild(baseStyle);
+
+// ===== FUNÇÕES UTILITÁRIAS GLOBAIS =====
+// Função para testar configurações no console
+window.testConfig = function(newConfig) {
+  if (siteLoader) {
+    siteLoader.config = { ...siteLoader.config, ...newConfig };
+    siteLoader.applyAllConfigurations();
+    console.log('Configuração de teste aplicada:', newConfig);
+  }
 };
 
-console.log('✅ Sistema de configuração dinâmica carregado!');
-console.log('🛠️ Para depuração, use: window.siteConfig.reload()');
-console.log('🎨 Para testar tema, use: window.siteConfig.updateTheme({primaryColor: "#FF0000"})');
-
-// Função para carregar e aplicar configurações
-async function loadAndApplyConfig() {
-  try {
-    // Carregar config.json
-    const response = await fetch('./config.json');
-    const config = await response.json();
-    
-    console.log('Configurações carregadas:', config);
-    
-    // Aplicar configurações do perfil
-    if (config.profile) {
-      // Atualizar nome
-      const nameElements = document.querySelectorAll('.profile-name, .name');
-      nameElements.forEach(el => {
-        if (el) el.textContent = config.profile.name || 'Nome';
-      });
-      
-      // Atualizar título
-      const titleElements = document.querySelectorAll('.profile-title, .title');
-      titleElements.forEach(el => {
-        if (el) el.textContent = config.profile.title || 'Título';
-      });
-      
-      // Atualizar bio
-      const bioElements = document.querySelectorAll('.profile-bio, .bio');
-      bioElements.forEach(el => {
-        if (el) el.textContent = config.profile.bio || 'Bio';
-      });
-      
-      // Atualizar foto do perfil
-      const imageElements = document.querySelectorAll('.profile-image, .profile-photo img');
-      imageElements.forEach(el => {
-        if (el && config.profile.image) {
-          el.src = config.profile.image;
-          el.alt = config.profile.name || 'Foto do perfil';
-        }
-      });
-    }
-    
-    // Aplicar cores do tema
-    if (config.theme) {
-      const root = document.documentElement;
-      
-      // Definir variáveis CSS customizadas
-      root.style.setProperty('--primary-color', config.theme.primaryColor || '#6366f1');
-      root.style.setProperty('--secondary-color', config.theme.secondaryColor || '#8b5cf6');
-      root.style.setProperty('--background-color', config.theme.backgroundColor || '#0f172a');
-      root.style.setProperty('--particle-color', config.theme.particleColor || config.theme.primaryColor || '#6366f1');
-      root.style.setProperty('--profile-border-color', config.theme.profileBorderColor || config.theme.secondaryColor || '#8b5cf6');
-      root.style.setProperty('--link-hover-color', config.theme.linkHoverColor || config.theme.primaryColor || '#6366f1');
-      
-      // Atualizar pseudo-elementos dinamicamente
-      updatePseudoElements(config.theme);
-    }
-    
-    // Aplicar links
-    if (config.links && config.links.length > 0) {
-      updateSocialLinks(config.links);
-    }
-    
-  } catch (error) {
-    console.error('Erro ao carregar configurações:', error);
+// Função para recarregar site
+window.reloadSite = function() {
+  if (siteLoader) {
+    siteLoader.reload();
   }
-}
+};
 
-// Função para atualizar pseudo-elementos
-function updatePseudoElements(theme) {
-  // Remover estilo anterior se existir
-  const existingStyle = document.getElementById('dynamic-pseudo-styles');
-  if (existingStyle) {
-    existingStyle.remove();
-  }
-  
-  // Criar novo estilo para pseudo-elementos
-  const style = document.createElement('style');
-  style.id = 'dynamic-pseudo-styles';
-  
-  const particleColor = theme.particleColor || theme.primaryColor || '#6366f1';
-  const profileBorderColor = theme.profileBorderColor || theme.secondaryColor || '#8b5cf6';
-  const linkHoverColor = theme.linkHoverColor || theme.primaryColor || '#6366f1';
-  
-  style.textContent = `
-    /* Partículas de fundo */
-    .background-particles::before,
-    .particles::before,
-    body::before {
-      background: radial-gradient(circle, ${particleColor}33 1px, transparent 1px) !important;
-    }
-    
-    /* Borda da foto do perfil */
-    .profile-image::before,
-    .profile-photo::before {
-      border-color: ${profileBorderColor} !important;
-      box-shadow: 0 0 20px ${profileBorderColor}66 !important;
-    }
-    
-    /* Hover dos links */
-    .link-card:hover::before,
-    .social-link:hover::before {
-      background: linear-gradient(45deg, ${linkHoverColor}44, ${linkHoverColor}22) !important;
-    }
-    
-    /* Gradientes dinâmicos */
-    .gradient-bg {
-      background: linear-gradient(135deg, ${theme.primaryColor || '#6366f1'}, ${theme.secondaryColor || '#8b5cf6'}) !important;
-    }
-  `;
-  
-  document.head.appendChild(style);
-}
-
-// Função para atualizar links sociais
-function updateSocialLinks(links) {
-  const linksContainer = document.querySelector('.social-links, .links-container');
-  if (!linksContainer) return;
-  
-  linksContainer.innerHTML = '';
-  
-  links.forEach(link => {
-    if (link.active) {
-      const linkElement = document.createElement('a');
-      linkElement.href = link.url;
-      linkElement.target = '_blank';
-      linkElement.className = 'link-card social-link';
-      linkElement.style.color = link.color || '#6366f1';
-      
-      linkElement.innerHTML = `
-        <i class="${link.icon || 'fas fa-link'}"></i>
-        <span>${link.title}</span>
-      `;
-      
-      linksContainer.appendChild(linkElement);
-    }
-  });
-}
-
-// Carregar configurações quando a página carregar
-document.addEventListener('DOMContentLoaded', loadAndApplyConfig);
-
-// Recarregar configurações a cada 30 segundos (opcional)
-setInterval(loadAndApplyConfig, 30000);
+console.log('🚀 Script de HTML dinâmico carregado com sucesso!');
+console.log('💡 Use window.testConfig({...}) para testar configurações');
+console.log('🔄 Use window.reloadSite() para recarregar manualmente');
     </script>
 </head>
 <body>
