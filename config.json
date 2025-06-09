@@ -3,12 +3,12 @@
   "description": "fdsfsfd",
   "photoUrl": "https://avatars.githubusercontent.com/u/168670877?v=4&size=64",
   "theme": {
-    "primaryColor": "#744e4e",
-    "secondaryColor": "#cc3333",
+    "primaryColor": "#ffffff",
+    "secondaryColor": "#ffffff",
     "backgroundColor": "#6c84cb",
     "textColor": "#2d3436",
     "particleColor": "#ffffff",
-    "profileBorderColor": "#ff0000",
+    "profileBorderColor": "#ffffff",
     "linkHoverColor": "#ffffff"
   },
   "profile": {
