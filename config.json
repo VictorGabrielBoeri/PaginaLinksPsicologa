@@ -1,53 +1,34 @@
 {
-    "profile": {
-        "name": "Maria Silva",
-        "profession": "Psicóloga Clínica",
-        "bio": "Especialista em terapia cognitivo-comportamental com mais de 10 anos de experiência.",
-        "image": "img/perfil.jpg"
-    },
-    "socialLinks": {
-        "whatsapp": "https://wa.me/5511999999999?text=Olá! Gostaria de agendar uma consulta.",
-        "instagram": "https://instagram.com/psicologa.maria",
-        "portfolio": "https://mariasilva.psi.br",
-        "linkedin": "https://linkedin.com/in/maria-silva-psicologa",
-        "customLinks": [
-            {
-                "title": "Artigos e Blog",
-                "description": "Leia meus artigos sobre saúde mental",
-                "url": "https://blog.mariasilva.com",
-                "icon": "fas fa-blog"
-            },
-            {
-                "title": "Cursos Online",
-                "description": "Participe dos meus cursos",
-                "url": "https://cursos.mariasilva.com",
-                "icon": "fas fa-graduation-cap"
-            }
-        ]
-    },
-    "theme": {
-        "primaryColor": "#6366f1",
-        "secondaryColor": "#8b5cf6",
-        "accentColor": "#f59e0b",
-        "backgroundColor": "#0f0f23",
-        "textColor": "#ffffff",
-        "fontFamily": "Inter, sans-serif",
-        "borderRadius": "12px"
-    },
-    "appointment": {
-        "enabled": true,
-        "availableHours": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
-        "availableDays": [1, 2, 3, 4, 5],
-        "duration": 50,
-        "timezone": "America/Sao_Paulo"
-    },
-    "analytics": {
-        "googleAnalytics": "GA_TRACKING_ID",
-        "facebookPixel": "FB_PIXEL_ID"
-    },
-    "seo": {
-        "title": "Maria Silva - Psicóloga Clínica",
-        "description": "Psicóloga especializada em terapia cognitivo-comportamental. Agende sua consulta online.",
-        "keywords": "psicóloga, terapia, saúde mental, consulta online"
+  "siteName": "",
+  "description": "",
+  "photoUrl": "",
+  "theme": {
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#8b5cf6",
+    "backgroundColor": "#0f0f23",
+    "textColor": "#2d3436"
+  },
+  "profile": {
+    "name": "Maria Silva",
+    "title": "",
+    "bio": "Especialista em terapia cognitivo-comportamental com mais de 10 anos de experiência.",
+    "image": "img/perfil.jpg",
+    "location": "",
+    "experience": ""
+  },
+  "contact": {
+    "email": "",
+    "phone": "",
+    "whatsapp": "",
+    "address": ""
+  },
+  "appointment": {
+    "enabled": true,
+    "whatsappNumber": "",
+    "workingHours": {
+      "start": "08:00",
+      "end": "18:00"
     }
+  },
+  "links": []
 }
