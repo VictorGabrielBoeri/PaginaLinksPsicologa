@@ -1,85 +1,27 @@
 {
-  "site": {
-    "title": "Seu Nome - Designer Gráfico",
-    "description": "Transformando ideias em designs únicos",
-    "favicon": "https://via.placeholder.com/32x32"
-  },
+  "siteName": "",
+  "description": "Links importantes e informações de contato",
+  "photoUrl": "",
   "theme": {
-    "primaryColor": "#6366f1",
-    "secondaryColor": "#8b5cf6",
-    "backgroundColor": "#0f172a",
-    "textColor": "#f1f5f9"
+    "primaryColor": "#000000",
+    "secondaryColor": "#000000",
+    "backgroundColor": "#000000"
   },
   "profile": {
-    "name": "Seu Nome",
-    "title": "Designer Gráfico",
-    "bio": "Especialista em identidade visual e design digital. Criando soluções visuais que conectam marcas aos seus públicos.",
-    "image": "https://via.placeholder.com/150x150",
-    "location": "São Paulo, SP",
-    "experience": "5+ anos de experiência"
-  },
-  "links": [
-    {
-      "title": "Portfolio",
-      "url": "https://seu-portfolio.com",
-      "icon": "fas fa-briefcase",
-      "type": "external",
-      "description": "Veja meus trabalhos",
-      "color": "#6366f1"
-    },
-    {
-      "title": "Agendar Consulta",
-      "url": "#",
-      "icon": "fas fa-calendar-alt",
-      "type": "modal",
-      "description": "Agende uma conversa",
-      "color": "#10b981"
-    },
-    {
-      "title": "Instagram",
-      "url": "https://instagram.com/seuusuario",
-      "icon": "fab fa-instagram",
-      "type": "social",
-      "description": "@seuusuario",
-      "color": "#e1306c"
-    }
-  ],
-  "contact": {
-    "email": "contato@seuemail.com",
-    "phone": "+5511999999999",
-    "whatsapp": "+5511999999999",
-    "address": "São Paulo, SP"
+    "name": "",
+    "title": "",
+    "image": "",
+    "location": "",
+    "experience": "",
+    "bio": ""
   },
   "appointment": {
-    "enabled": true,
-    "whatsappNumber": "+5511999999999",
+    "enabled": false,
+    "whatsappNumber": "",
     "workingHours": {
-      "start": "08:00",
-      "end": "18:00",
-      "lunch": {
-        "start": "12:00",
-        "end": "14:00"
-      }
-    },
-    "meetingTypes": [
-      "Consulta Inicial",
-      "Apresentação de Projeto",
-      "Reunião de Briefing",
-      "Aprovação Final"
-    ],
-    "timezone": "America/Sao_Paulo"
+      "start": "",
+      "end": ""
+    }
   },
-  "footer": {
-    "text": "© 2024 Seu Nome. Todos os direitos reservados.",
-    "showSocialLinks": true
-  },
-  "analytics": {
-    "googleAnalytics": "G-XXXXXXXXXX",
-    "facebookPixel": ""
-  },
-  "integrations": {
-    "notiflix": true,
-    "fontAwesome": true,
-    "googleFonts": ["Inter:300,400,500,600,700"]
-  }
+  "links": []
 }
