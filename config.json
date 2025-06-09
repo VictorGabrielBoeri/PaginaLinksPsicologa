@@ -6,7 +6,10 @@
     "primaryColor": "#e8a6a6",
     "secondaryColor": "#ffffff",
     "backgroundColor": "#a77272",
-    "textColor": "#2d3436"
+    "textColor": "#2d3436",
+    "particleColor": "#6366f1",
+    "profileBorderColor": "#4c00ff",
+    "linkHoverColor": "#a855f7"
   },
   "profile": {
     "name": "Maria Silva",
