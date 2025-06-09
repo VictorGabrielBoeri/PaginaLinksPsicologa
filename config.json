@@ -6,34 +6,37 @@
     "primaryColor": "#6f42c1",
     "secondaryColor": "#495057",
     "textColor": "#ffffff",
-    "backgroundColor": "#f8f9fa"
+    "backgroundColor": "#f8f9fa",
+    "accentColor": "#28a745"
   },
   "profile": {
     "name": "Maria Silva",
     "title": "Designer Gráfica",
     "photo": "img/perfil.jpg",
-    "bio": "Especialista em design gráfico com foco em identidade visual e materiais promocionais. Transformo ideias em designs impactantes!"
+    "bio": "Especialista em design gráfico com foco em identidade visual e materiais promocionais. Transformo ideias em designs impactantes que conectam marcas aos seus públicos!"
   },
   "links": [
     {
       "id": "agendamento",
       "title": "Agendar Reunião",
       "description": "Vamos conversar sobre seu projeto!",
-      "url": "#",
+      "url": "#appointmentModal",
       "icon": "fas fa-calendar-check",
       "color": "#28a745",
       "active": true,
-      "type": "modal"
+      "type": "modal",
+      "cssClass": "appointment-card"
     },
     {
       "id": "whatsapp",
       "title": "Contato Direto",
       "description": "Tire suas dúvidas pelo WhatsApp!",
-      "url": "https://wa.me/5511999999999",
+      "url": "https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre seus serviços de design.",
       "icon": "fab fa-whatsapp",
       "color": "#25d366",
       "active": true,
-      "type": "external"
+      "type": "external",
+      "cssClass": "whatsapp-card"
     },
     {
       "id": "instagram",
@@ -43,7 +46,8 @@
       "icon": "fab fa-instagram",
       "color": "#e4405f",
       "active": true,
-      "type": "external"
+      "type": "external",
+      "cssClass": "instagram-card"
     },
     {
       "id": "portfolio",
@@ -53,18 +57,77 @@
       "icon": "fas fa-briefcase",
       "color": "#6f42c1",
       "active": true,
-      "type": "external"
+      "type": "external",
+      "cssClass": "portfolio-card"
     }
   ],
+  "appointment": {
+    "enabled": true,
+    "types": [
+      {
+        "value": "briefing",
+        "label": "Briefing inicial",
+        "description": "Primeira conversa sobre o projeto"
+      },
+      {
+        "value": "apresentacao",
+        "label": "Apresentação de projeto",
+        "description": "Apresentação de propostas e ideias"
+      },
+      {
+        "value": "online",
+        "label": "Reunião online",
+        "description": "Reunião virtual por videochamada"
+      }
+    ],
+    "workingHours": {
+      "monday": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
+      "tuesday": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
+      "wednesday": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
+      "thursday": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
+      "friday": ["09:00", "10:00", "11:00", "14:00", "15:00"],
+      "saturday": [],
+      "sunday": []
+    },
+    "duration": 60,
+    "timezone": "America/Sao_Paulo"
+  },
   "contact": {
     "email": "contato@mariasilva.com",
     "phone": "+55 11 99999-9999",
-    "address": "São Paulo, SP"
+    "whatsapp": "+55 11 99999-9999",
+    "address": "São Paulo, SP",
+    "website": "https://mariasilva.com"
   },
   "settings": {
     "showFooter": true,
     "footerText": "© 2025 Maria Silva. Todos os direitos reservados.",
     "enableAppointment": true,
-    "appointmentType": "modal"
+    "appointmentType": "modal",
+    "enableNotifications": true,
+    "language": "pt-BR",
+    "analytics": {
+      "googleAnalytics": "",
+      "facebookPixel": ""
+    }
+  },
+  "integrations": {
+    "notiflix": {
+      "enabled": true,
+      "version": "3.2.6",
+      "config": {
+        "timeout": 3000,
+        "position": "right-top",
+        "cssAnimationStyle": "fade"
+      }
+    },
+    "fontAwesome": {
+      "enabled": true,
+      "version": "6.0.0"
+    },
+    "googleFonts": {
+      "enabled": true,
+      "families": ["Inter:wght@400;500;700;800"]
+    }
   }
 }
