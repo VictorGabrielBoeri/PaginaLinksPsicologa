@@ -1,30 +1,70 @@
 {
-  "siteName": "Página de Links - Psicóloga",
+  "siteName": "Maria Silva - Designer Gráfica",
   "description": "Links importantes e informações de contato",
-  "photoUrl": "",
+  "photoUrl": "img/perfil.jpg",
   "theme": {
-    "primaryColor": "#3d24ff",
-    "secondaryColor": "#a29bfe",
-    "textColor": "#2d3436"
+    "primaryColor": "#6f42c1",
+    "secondaryColor": "#495057",
+    "textColor": "#ffffff",
+    "backgroundColor": "#f8f9fa"
   },
   "profile": {
-    "name": "Dra.FF",
-    "title": "Psicóloga",
-    "photo": "",
-    "bio": "Descrição profissional da psicóloga"
+    "name": "Maria Silva",
+    "title": "Designer Gráfica",
+    "photo": "img/perfil.jpg",
+    "bio": "Especialista em design gráfico com foco em identidade visual e materiais promocionais. Transformo ideias em designs impactantes!"
   },
   "links": [
     {
-      "title": "WhatsApp",
-      "url": "https://wa.me/551199999999988",
-      "icon": "fab fa-whatsapp",
-      "color": "#25d366"
+      "id": "agendamento",
+      "title": "Agendar Reunião",
+      "description": "Vamos conversar sobre seu projeto!",
+      "url": "#",
+      "icon": "fas fa-calendar-check",
+      "color": "#28a745",
+      "active": true,
+      "type": "modal"
     },
     {
+      "id": "whatsapp",
+      "title": "Contato Direto",
+      "description": "Tire suas dúvidas pelo WhatsApp!",
+      "url": "https://wa.me/5511999999999",
+      "icon": "fab fa-whatsapp",
+      "color": "#25d366",
+      "active": true,
+      "type": "external"
+    },
+    {
+      "id": "instagram",
       "title": "Instagram",
-      "url": "https://instagram.com/usuario",
+      "description": "Veja meus trabalhos criativos!",
+      "url": "https://instagram.com/mariasilva_design",
       "icon": "fab fa-instagram",
-      "color": "#e4405f"
+      "color": "#e4405f",
+      "active": true,
+      "type": "external"
+    },
+    {
+      "id": "portfolio",
+      "title": "Meu Portfólio",
+      "description": "Conheça meus projetos e trabalhos!",
+      "url": "https://portfolio.mariasilva.com",
+      "icon": "fas fa-briefcase",
+      "color": "#6f42c1",
+      "active": true,
+      "type": "external"
     }
-  ]
+  ],
+  "contact": {
+    "email": "contato@mariasilva.com",
+    "phone": "+55 11 99999-9999",
+    "address": "São Paulo, SP"
+  },
+  "settings": {
+    "showFooter": true,
+    "footerText": "© 2025 Maria Silva. Todos os direitos reservados.",
+    "enableAppointment": true,
+    "appointmentType": "modal"
+  }
 }
