@@ -1,14 +1,14 @@
 {
   "siteName": "",
-  "description": "Links importantes e informações de contato",
+  "description": "",
   "photoUrl": "",
   "theme": {
-    "primaryColor": "#000000",
+    "primaryColor": "#ff0000",
     "secondaryColor": "#000000",
-    "backgroundColor": "#000000"
+    "backgroundColor": "#c56767"
   },
   "profile": {
-    "name": "",
+    "name": "ELISON",
     "title": "",
     "image": "",
     "location": "",
