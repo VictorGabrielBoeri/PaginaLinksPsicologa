@@ -3,9 +3,9 @@
   "description": "",
   "photoUrl": "",
   "theme": {
-    "primaryColor": "#ff0000",
+    "primaryColor": "#e8a6a6",
     "secondaryColor": "#ffffff",
-    "backgroundColor": "#000000",
+    "backgroundColor": "#a77272",
     "textColor": "#2d3436"
   },
   "profile": {
