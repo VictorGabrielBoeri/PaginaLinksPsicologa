@@ -1,9 +1,9 @@
 // Configuração
 const config = {
     socialLinks: {
-        whatsapp: '5585986106410',
-        instagram: 'psicologoelildsonlima',
-        portfolio: 'https://elildson-lima-psicologo.com'
+        whatsapp: '5511999887766',
+        instagram: 'mariasilva_designer',
+        portfolio: 'https://mariasilva-designer.com'
     }
 };
 
@@ -12,7 +12,7 @@ const links = {};
 
 function customizePage() {
     // Atualizar links
-    links.whatsapp = `https://wa.me/${config.socialLinks.whatsapp}?text=Olá! Gostaria de solicitar um orçamento.`;
+    links.whatsapp = `https://wa.me/${config.socialLinks.whatsapp}?text=Olá! Gostaria de solicitar um orçamento para design.`;
     links.instagram = `https://instagram.com/${config.socialLinks.instagram}`;
     links.portfolio = config.socialLinks.portfolio;
 }
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Formatar manualmente sem usar Date()
             const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
             
-            let message = `Olá! Gostaria de agendar uma consulta:\n\n` +
+            let message = `Olá! Gostaria de agendar uma reunião:\n\n` +
                          `Tipo: ${appointmentType}\n` +
                          `Data: ${formattedDate}\n` +
                          `Horário: ${appointmentTime}\n` +
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 message += `\nObservações: ${observations}`;
             }
             
-            const whatsappUrl = `https://wa.me/5585986106410?text=${encodeURIComponent(message)}`;
+            const whatsappUrl = `https://wa.me/5511999887766?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
             
             // Fechar modal após enviar
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (!appointmentDate) missingFields.push('Data');
             if (!appointmentTime) missingFields.push('Horário');
-            if (!appointmentType) missingFields.push('Tipo de consulta');
+            if (!appointmentType) missingFields.push('Tipo de reunião');
             if (!clientName) missingFields.push('Nome');
             if (!clientPhone) missingFields.push('WhatsApp');
             if (!clientEmail) missingFields.push('E-mail');
@@ -143,13 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
         openLink('whatsapp');
         trackClick('WhatsApp');
     });
-    
-    // LinkedIn
-    // Remover estas linhas duplicadas (495-499):
-    // document.querySelector('.linkedin-card').addEventListener('click', function() {
-    //     openLink('linkedin');
-    //     trackClick('LinkedIn');
-    // });
     
     // Instagram
     document.querySelector('.instagram-card').addEventListener('click', function() {
