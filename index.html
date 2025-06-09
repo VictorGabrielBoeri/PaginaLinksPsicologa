@@ -834,12 +834,147 @@ console.log('✅ Sistema de configuração dinâmica carregado!');
 console.log('🛠️ Para depuração, use: window.siteConfig.reload()');
 console.log('🎨 Para testar tema, use: window.siteConfig.updateTheme({primaryColor: "#FF0000"})');
 
-// ========================================
-// RESTO DO CÓDIGO ORIGINAL (se existir)
-// ========================================
+// Função para carregar e aplicar configurações
+async function loadAndApplyConfig() {
+  try {
+    // Carregar config.json
+    const response = await fetch('./config.json');
+    const config = await response.json();
+    
+    console.log('Configurações carregadas:', config);
+    
+    // Aplicar configurações do perfil
+    if (config.profile) {
+      // Atualizar nome
+      const nameElements = document.querySelectorAll('.profile-name, .name');
+      nameElements.forEach(el => {
+        if (el) el.textContent = config.profile.name || 'Nome';
+      });
+      
+      // Atualizar título
+      const titleElements = document.querySelectorAll('.profile-title, .title');
+      titleElements.forEach(el => {
+        if (el) el.textContent = config.profile.title || 'Título';
+      });
+      
+      // Atualizar bio
+      const bioElements = document.querySelectorAll('.profile-bio, .bio');
+      bioElements.forEach(el => {
+        if (el) el.textContent = config.profile.bio || 'Bio';
+      });
+      
+      // Atualizar foto do perfil
+      const imageElements = document.querySelectorAll('.profile-image, .profile-photo img');
+      imageElements.forEach(el => {
+        if (el && config.profile.image) {
+          el.src = config.profile.image;
+          el.alt = config.profile.name || 'Foto do perfil';
+        }
+      });
+    }
+    
+    // Aplicar cores do tema
+    if (config.theme) {
+      const root = document.documentElement;
+      
+      // Definir variáveis CSS customizadas
+      root.style.setProperty('--primary-color', config.theme.primaryColor || '#6366f1');
+      root.style.setProperty('--secondary-color', config.theme.secondaryColor || '#8b5cf6');
+      root.style.setProperty('--background-color', config.theme.backgroundColor || '#0f172a');
+      root.style.setProperty('--particle-color', config.theme.particleColor || config.theme.primaryColor || '#6366f1');
+      root.style.setProperty('--profile-border-color', config.theme.profileBorderColor || config.theme.secondaryColor || '#8b5cf6');
+      root.style.setProperty('--link-hover-color', config.theme.linkHoverColor || config.theme.primaryColor || '#6366f1');
+      
+      // Atualizar pseudo-elementos dinamicamente
+      updatePseudoElements(config.theme);
+    }
+    
+    // Aplicar links
+    if (config.links && config.links.length > 0) {
+      updateSocialLinks(config.links);
+    }
+    
+  } catch (error) {
+    console.error('Erro ao carregar configurações:', error);
+  }
+}
 
-// Aqui você deve manter todo o código original do script.js
-// como o modal de agendamento, efeitos, etc.
+// Função para atualizar pseudo-elementos
+function updatePseudoElements(theme) {
+  // Remover estilo anterior se existir
+  const existingStyle = document.getElementById('dynamic-pseudo-styles');
+  if (existingStyle) {
+    existingStyle.remove();
+  }
+  
+  // Criar novo estilo para pseudo-elementos
+  const style = document.createElement('style');
+  style.id = 'dynamic-pseudo-styles';
+  
+  const particleColor = theme.particleColor || theme.primaryColor || '#6366f1';
+  const profileBorderColor = theme.profileBorderColor || theme.secondaryColor || '#8b5cf6';
+  const linkHoverColor = theme.linkHoverColor || theme.primaryColor || '#6366f1';
+  
+  style.textContent = `
+    /* Partículas de fundo */
+    .background-particles::before,
+    .particles::before,
+    body::before {
+      background: radial-gradient(circle, ${particleColor}33 1px, transparent 1px) !important;
+    }
+    
+    /* Borda da foto do perfil */
+    .profile-image::before,
+    .profile-photo::before {
+      border-color: ${profileBorderColor} !important;
+      box-shadow: 0 0 20px ${profileBorderColor}66 !important;
+    }
+    
+    /* Hover dos links */
+    .link-card:hover::before,
+    .social-link:hover::before {
+      background: linear-gradient(45deg, ${linkHoverColor}44, ${linkHoverColor}22) !important;
+    }
+    
+    /* Gradientes dinâmicos */
+    .gradient-bg {
+      background: linear-gradient(135deg, ${theme.primaryColor || '#6366f1'}, ${theme.secondaryColor || '#8b5cf6'}) !important;
+    }
+  `;
+  
+  document.head.appendChild(style);
+}
+
+// Função para atualizar links sociais
+function updateSocialLinks(links) {
+  const linksContainer = document.querySelector('.social-links, .links-container');
+  if (!linksContainer) return;
+  
+  linksContainer.innerHTML = '';
+  
+  links.forEach(link => {
+    if (link.active) {
+      const linkElement = document.createElement('a');
+      linkElement.href = link.url;
+      linkElement.target = '_blank';
+      linkElement.className = 'link-card social-link';
+      linkElement.style.color = link.color || '#6366f1';
+      
+      linkElement.innerHTML = `
+        <i class="${link.icon || 'fas fa-link'}"></i>
+        <span>${link.title}</span>
+      `;
+      
+      linksContainer.appendChild(linkElement);
+    }
+  });
+}
+
+// Carregar configurações quando a página carregar
+document.addEventListener('DOMContentLoaded', loadAndApplyConfig);
+
+// Recarregar configurações a cada 30 segundos (opcional)
+setInterval(loadAndApplyConfig, 30000);
     </script>
 </head>
 <body>
