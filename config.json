@@ -1,18 +1,26 @@
 {
   "siteName": "Maria Silva - Designer Gráfica",
-  "description": "Página de links da designer Maria Silva",
-  "profile": {
-    "name": "Maria Silva",
-    "title": "Designer Gráfica",
-    "bio": "Criando designs únicos e impactantes",
-    "photoUrl": "img/perfil.jpg",
-    "location": "São Paulo, SP",
-    "experience": "5 anos"
-  },
+  "description": "Página de links da Maria Silva",
+  "photoUrl": "https://paginalinks.netlify.app/img/perfil.jpg",
   "theme": {
     "primaryColor": "#6366f1",
     "secondaryColor": "#f8fafc",
-    "accentColor": "#10b981"
+    "backgroundColor": "#0f172a",
+    "textColor": "#2d3436"
+  },
+  "profile": {
+    "name": "E�ssd",
+    "title": "Designer Gráfica",
+    "bio": "Criando designs únicos e impactantes",
+    "image": "",
+    "location": "São Paulo, SP",
+    "experience": "5 anos"
+  },
+  "contact": {
+    "email": "",
+    "phone": "",
+    "whatsapp": "5511999999999",
+    "address": ""
   },
   "appointment": {
     "enabled": true,
@@ -22,8 +30,5 @@
       "end": "18:00"
     }
   },
-  "socialLinks": {
-    "instagram": "https://instagram.com/mariasilva",
-    "portfolio": "https://portfolio.mariasilva.com"
-  }
+  "links": []
 }
