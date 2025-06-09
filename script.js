@@ -1,3 +1,59 @@
+// Carregar configurações do config.json
+async function loadConfig() {
+    try {
+        const response = await fetch('config.json');
+        const config = await response.json();
+        
+        // Aplicar configurações ao site
+        applyConfig(config);
+    } catch (error) {
+        console.error('Erro ao carregar configurações:', error);
+    }
+}
+
+function applyConfig(config) {
+    // Atualizar título do site
+    document.title = config.siteName;
+    
+    // Atualizar informações do perfil
+    const profileName = document.querySelector('.profile-name');
+    if (profileName) profileName.textContent = config.profile.name;
+    
+    const profileTitle = document.querySelector('.profile-title');
+    if (profileTitle) profileTitle.textContent = config.profile.title;
+    
+    const profileBio = document.querySelector('.profile-bio');
+    if (profileBio) profileBio.textContent = config.profile.bio;
+    
+    const profileLocation = document.querySelector('.profile-location');
+    if (profileLocation) profileLocation.textContent = config.profile.location;
+    
+    // Atualizar foto do perfil
+    const profilePhoto = document.querySelector('.profile-photo');
+    if (profilePhoto && config.profile.photoUrl) {
+        profilePhoto.src = config.profile.photoUrl;
+    }
+    
+    // Aplicar cores do tema
+    if (config.theme) {
+        document.documentElement.style.setProperty('--primary-color', config.theme.primaryColor);
+        document.documentElement.style.setProperty('--secondary-color', config.theme.secondaryColor);
+        document.documentElement.style.setProperty('--accent-color', config.theme.accentColor);
+    }
+    
+    // Configurar agendamento
+    if (config.appointment && config.appointment.enabled) {
+        const whatsappNumber = config.appointment.whatsappNumber;
+        const whatsappLinks = document.querySelectorAll('.whatsapp-link');
+        whatsappLinks.forEach(link => {
+            link.href = `https://wa.me/${whatsappNumber}`;
+        });
+    }
+}
+
+// Carregar configurações quando a página carregar
+document.addEventListener('DOMContentLoaded', loadConfig);
+
 // Configuração
 const config = {
     socialLinks: {
