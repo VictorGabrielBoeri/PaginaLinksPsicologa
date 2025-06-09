@@ -22,12 +22,12 @@
   "contact": {
     "email": "",
     "phone": "",
-    "whatsapp": "",
+    "whatsapp": "5511999999999",
     "address": ""
   },
   "appointment": {
     "enabled": true,
-    "whatsappNumber": "",
+    "whatsappNumber": "5511999999999",
     "workingHours": {
       "start": "08:00",
       "end": "18:00"
