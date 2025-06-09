@@ -1,7 +1,7 @@
 {
   "siteName": "",
   "description": "Links importantes e informações de contato",
-  "photoUrl": "",
+  "photoUrl": "https://paginalinks.netlify.app/img/perfil.jpg",
   "theme": {
     "primaryColor": "#ff0000",
     "secondaryColor": "#000000",
