@@ -7,9 +7,9 @@
     "secondaryColor": "#ffffff",
     "backgroundColor": "#dba4a4",
     "textColor": "#2d3436",
-    "particleColor": "#060afe",
-    "profileBorderColor": "#000000",
-    "linkHoverColor": "#a855f7"
+    "particleColor": "#000000",
+    "profileBorderColor": "#ff0000",
+    "linkHoverColor": "#ffffff"
   },
   "profile": {
     "name": "ELISON TESTEt",
