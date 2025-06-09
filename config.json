@@ -1,39 +1,30 @@
 {
   "siteName": "Página de Links - Psicóloga",
   "description": "Links importantes e informações de contato",
+  "photoUrl": "",
   "theme": {
     "primaryColor": "#3d24ff",
     "secondaryColor": "#a29bfe",
-    "backgroundColor": "#ffffff",
     "textColor": "#2d3436"
   },
   "profile": {
-    "name": "Dra. [Nome da Psicóloga]",
+    "name": "Dra.FF",
     "title": "Psicóloga",
     "photo": "",
     "bio": "Descrição profissional da psicóloga"
   },
   "links": [
     {
-      "id": 1,
       "title": "WhatsApp",
       "url": "https://wa.me/551199999999988",
       "icon": "fab fa-whatsapp",
-      "color": "#25d366",
-      "active": true
+      "color": "#25d366"
     },
     {
-      "id": 2,
       "title": "Instagram",
       "url": "https://instagram.com/usuario",
       "icon": "fab fa-instagram",
-      "color": "#e4405f",
-      "active": true
+      "color": "#e4405f"
     }
-  ],
-  "contact": {
-    "email": "contato@psicologa.com",
-    "phone": "(11) 99999-9999",
-    "address": "Endereço do consultório"
-  }
+  ]
 }
