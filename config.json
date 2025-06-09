@@ -1,27 +1,77 @@
 {
-  "siteName": "",
-  "description": "",
-  "photoUrl": "",
+  "site": {
+    "title": "ELISON - Designer Gráfico",
+    "description": "Transformando ideias em designs únicos",
+    "favicon": ""
+  },
   "theme": {
     "primaryColor": "#ff0000",
     "secondaryColor": "#000000",
-    "backgroundColor": "#c56767"
+    "backgroundColor": "#c56767",
+    "textColor": "#ffffff"
   },
   "profile": {
     "name": "ELISON",
-    "title": "",
+    "title": "Designer Gráfico",
+    "bio": "Especialista em identidade visual e design digital",
     "image": "",
     "location": "",
-    "experience": "",
-    "bio": ""
+    "experience": ""
+  },
+  "contact": {
+    "email": "",
+    "phone": "",
+    "whatsapp": "",
+    "address": ""
   },
   "appointment": {
     "enabled": false,
     "whatsappNumber": "",
     "workingHours": {
-      "start": "",
-      "end": ""
-    }
+      "start": "08:00",
+      "end": "18:00",
+      "lunch": {
+        "start": "12:00",
+        "end": "14:00"
+      }
+    },
+    "meetingTypes": [
+      "Consulta Inicial",
+      "Apresentação de Projeto",
+      "Reunião de Briefing",
+      "Aprovação Final"
+    ],
+    "timezone": "America/Sao_Paulo"
   },
-  "links": []
+  "links": [
+    {
+      "title": "Portfolio",
+      "url": "https://seu-portfolio.com",
+      "icon": "fas fa-briefcase",
+      "type": "external",
+      "description": "Veja meus trabalhos",
+      "color": "#ff0000"
+    },
+    {
+      "title": "Agendar Consulta",
+      "url": "#",
+      "icon": "fas fa-calendar-alt",
+      "type": "modal",
+      "description": "Agende uma conversa",
+      "color": "#000000"
+    }
+  ],
+  "footer": {
+    "text": "© 2024 ELISON. Todos os direitos reservados.",
+    "showSocialLinks": true
+  },
+  "analytics": {
+    "googleAnalytics": "",
+    "facebookPixel": ""
+  },
+  "integrations": {
+    "notiflix": true,
+    "fontAwesome": true,
+    "googleFonts": ["Inter:300,400,500,600,700"]
+  }
 }
