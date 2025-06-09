@@ -1,7 +1,7 @@
 {
   "siteName": "",
-  "description": "",
-  "photoUrl": "",
+  "description": "Links importantes e informações de contato",
+  "photoUrl": "https://avatars.githubusercontent.com/u/168670877?v=4&size=64",
   "theme": {
     "primaryColor": "#000000",
     "secondaryColor": "#ff0000",
@@ -12,12 +12,12 @@
     "linkHoverColor": "#a855f7"
   },
   "profile": {
-    "name": "Maria Silva",
-    "title": "",
+    "name": "ELISON",
+    "title": "Designer Gráfico",
     "bio": "Especialista em terapia cognitivo-comportamental com mais de 10 anos de experiência.",
     "image": "https://avatars.githubusercontent.com/u/168670877?v=4&size=64",
-    "location": "",
-    "experience": ""
+    "location": "São Paulo, SP",
+    "experience": "5 anos"
   },
   "contact": {
     "email": "",
