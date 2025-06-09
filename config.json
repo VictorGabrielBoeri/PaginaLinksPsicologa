@@ -3,8 +3,8 @@
   "description": "",
   "photoUrl": "",
   "theme": {
-    "primaryColor": "#0004ff",
-    "secondaryColor": "#17004d",
+    "primaryColor": "#ffffff",
+    "secondaryColor": "#000000",
     "backgroundColor": "#0f0f23",
     "textColor": "#2d3436"
   },
