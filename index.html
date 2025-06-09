@@ -162,6 +162,137 @@
 
     <!-- Notiflix JS -->
     <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-aio-3.2.6.min.js"></script>
+    <script>
+        // Carregar configurações do config.json
+async function loadConfig() {
+    try {
+        console.log('Carregando configurações...');
+        const response = await fetch('config.json');
+        
+        if (!response.ok) {
+            throw new Error(`Erro ao carregar config.json: ${response.status}`);
+        }
+        
+        const config = await response.json();
+        console.log('Configurações carregadas:', config);
+        
+        // Aplicar configurações ao site
+        applyConfig(config);
+    } catch (error) {
+        console.error('Erro ao carregar configurações:', error);
+        // Usar valores padrão se não conseguir carregar
+        console.log('Usando configurações padrão');
+    }
+}
+
+function applyConfig(config) {
+    console.log('Aplicando configurações:', config);
+    
+    // Atualizar título da página
+    if (config.siteName) {
+        document.title = config.siteName;
+    }
+    
+    // Atualizar informações do perfil
+    if (config.profile) {
+        // Nome do perfil
+        const profileName = document.querySelector('.profile-section h1');
+        if (profileName && config.profile.name) {
+            profileName.textContent = config.profile.name;
+            console.log('Nome atualizado para:', config.profile.name);
+        }
+        
+        // Título/Subtítulo
+        const profileSubtitle = document.querySelector('.profile-section .subtitle');
+        if (profileSubtitle && config.profile.title) {
+            profileSubtitle.textContent = config.profile.title;
+            console.log('Título atualizado para:', config.profile.title);
+        }
+        
+        // Foto do perfil
+        const profileImg = document.getElementById('profileImg');
+        if (profileImg && config.profile.photoUrl) {
+            profileImg.src = config.profile.photoUrl;
+            profileImg.alt = config.profile.name || 'Foto do perfil';
+            console.log('Foto atualizada para:', config.profile.photoUrl);
+        }
+        
+        // Atualizar copyright no footer
+        const footer = document.querySelector('footer p');
+        if (footer && config.profile.name) {
+            const currentYear = new Date().getFullYear();
+            footer.textContent = `© ${currentYear} ${config.profile.name}. Todos os direitos reservados.`;
+        }
+    }
+    
+    // Aplicar cores do tema
+    if (config.theme) {
+        const root = document.documentElement;
+        
+        if (config.theme.primaryColor) {
+            root.style.setProperty('--primary-color', config.theme.primaryColor);
+            console.log('Cor primária atualizada para:', config.theme.primaryColor);
+        }
+        
+        if (config.theme.secondaryColor) {
+            root.style.setProperty('--secondary-color', config.theme.secondaryColor);
+            console.log('Cor secundária atualizada para:', config.theme.secondaryColor);
+        }
+        
+        if (config.theme.accentColor) {
+            root.style.setProperty('--accent-color', config.theme.accentColor);
+            console.log('Cor de destaque atualizada para:', config.theme.accentColor);
+        }
+    }
+    
+    // Configurar links de contato
+    if (config.appointment && config.appointment.whatsappNumber) {
+        // Atualizar link do WhatsApp
+        const whatsappCard = document.querySelector('.whatsapp-card');
+        if (whatsappCard) {
+            whatsappCard.addEventListener('click', () => {
+                const message = encodeURIComponent('Olá! Gostaria de saber mais sobre seus serviços.');
+                window.open(`https://wa.me/${config.appointment.whatsappNumber}?text=${message}`, '_blank');
+            });
+            console.log('WhatsApp configurado para:', config.appointment.whatsappNumber);
+        }
+    }
+    
+    // Configurar outros links se existirem no config
+    if (config.socialLinks) {
+        // Instagram
+        if (config.socialLinks.instagram) {
+            const instagramCard = document.querySelector('.instagram-card');
+            if (instagramCard) {
+                instagramCard.addEventListener('click', () => {
+                    window.open(config.socialLinks.instagram, '_blank');
+                });
+            }
+        }
+        
+        // Portfólio
+        if (config.socialLinks.portfolio) {
+            const portfolioCard = document.querySelector('.portfolio-card');
+            if (portfolioCard) {
+                portfolioCard.addEventListener('click', () => {
+                    window.open(config.socialLinks.portfolio, '_blank');
+                });
+            }
+        }
+    }
+    
+    console.log('Configurações aplicadas com sucesso!');
+}
+
+// Carregar configurações quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Página carregada, iniciando carregamento das configurações...');
+    loadConfig();
+});
+
+// Recarregar configurações a cada 30 segundos (opcional)
+// setInterval(loadConfig, 30000);
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
