@@ -5,7 +5,7 @@
   "theme": {
     "primaryColor": "#ff0000",
     "secondaryColor": "#4372fe",
-    "backgroundColor": "#ffffff",
+    "backgroundColor": "#000000",
     "textColor": "#2d3436"
   },
   "profile": {
