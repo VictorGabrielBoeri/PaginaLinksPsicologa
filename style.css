@@ -4,73 +4,14 @@
     box-sizing: border-box;
 }
 
-/* ========================================
-   VARIÁVEIS DE TEMA DINÂMICAS
-   ======================================== */
-
-/* Adicionar ao seu CSS existente */
-:root {
-  --primary-color: #6366f1;
-  --secondary-color: #8b5cf6;
-  --background-color: #0f172a;
-  --particle-color: #6366f1;
-  --profile-border-color: #8b5cf6;
-  --link-hover-color: #6366f1;
-}
-
-/* Usar as variáveis no CSS */
 body {
-  background-color: var(--background-color);
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(ellipse at center, #2c4a6b 0%, #1e3a52 30%, #15293d 70%, #0f1e2d 100%);
+    min-height: 100vh;
+    color: white;
+    overflow-x: hidden;
+    position: relative;
 }
-
-.profile-image {
-  border: 3px solid var(--profile-border-color);
-}
-
-.link-card {
-  transition: all 0.3s ease;
-}
-
-.link-card:hover {
-  background-color: var(--link-hover-color);
-  transform: translateY(-2px);
-}
-
-.gradient-bg {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-}
-
-.link-card {
-    background: var(--card-background);
-    border-radius: var(--border-radius);
-    transition: all var(--transition-normal);
-}
-
-.link-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
-
-.modal-content {
-    background: var(--background-color);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-lg);
-}
-
-/* Botões dinâmicos */
-.btn-primary {
-    background: var(--primary-color);
-    border-radius: var(--border-radius-sm);
-    transition: all var(--transition-fast);
-}
-
-.btn-secondary {
-    background: var(--secondary-color);
-    border-radius: var(--border-radius-sm);
-    transition: all var(--transition-fast);
-}
-
-/* Resto do seu CSS original aqui... */
 
 /* Adicionar efeito de partículas no fundo */
 body::before {
@@ -81,9 +22,9 @@ body::before {
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(circle at 20% 80%, rgba(214, 115, 115, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(197, 90, 90, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(139, 38, 53, 0.05) 0%, transparent 50%);
+        radial-gradient(circle at 20% 80%, rgba(180, 200, 232, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(132, 161, 200, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(44, 74, 107, 0.05) 0%, transparent 50%);
     z-index: -1;
     animation: float 20s ease-in-out infinite;
 }
@@ -117,10 +58,10 @@ body::before {
     margin: 0 auto 25px;
     border-radius: 50%;
     overflow: hidden;
-    border: 4px solid rgba(214, 115, 115, 0.3);
+    border: 4px solid rgba(180, 200, 232, 0.3);
     box-shadow: 
-        0 0 30px rgba(214, 115, 115, 0.2),
-        0 0 60px rgba(139, 38, 53, 0.1);
+        0 0 30px rgba(180, 200, 232, 0.2),
+        0 0 60px rgba(44, 74, 107, 0.1);
     transition: all 0.4s ease;
     position: relative;
 }
@@ -133,7 +74,7 @@ body::before {
     right: -4px;
     bottom: -4px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #D67373, #C55A5A, #8B2635);
+    background: linear-gradient(45deg, #b4c8e8, #84a1c8, #2c4a6b);
     z-index: -1;
     animation: rotate 3s linear infinite;
 }
@@ -146,25 +87,25 @@ body::before {
 .profile-image:hover {
     transform: scale(1.08);
     box-shadow: 
-        0 0 40px rgba(214, 115, 115, 0.4),
-        0 0 80px rgba(139, 38, 53, 0.2);
+        0 0 40px rgba(180, 200, 232, 0.4),
+        0 0 80px rgba(44, 74, 107, 0.2);
 }
 
 h1 {
     font-size: 2.8rem;
     font-weight: 800;
     margin-bottom: 8px;
-    background: linear-gradient(135deg, #fff 0%, #D67373 50%, #C55A5A 100%);
+    background: linear-gradient(135deg, #fff 0%, #b4c8e8 50%, #84a1c8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: 0 0 30px rgba(214, 115, 115, 0.3);
+    text-shadow: 0 0 30px rgba(180, 200, 232, 0.3);
     letter-spacing: -0.5px;
 }
 
 .subtitle {
     font-size: 1.3rem;
-    color: rgba(255, 182, 193, 0.9);
+    color: rgba(180, 200, 232, 0.9);
     margin-bottom: 25px;
     font-weight: 500;
     letter-spacing: 0.5px;
@@ -179,11 +120,11 @@ h1 {
 
 /* Melhorias nos cards */
 .link-card {
-    background: rgba(214, 115, 115, 0.08);
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 25px;
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(214, 115, 115, 0.15);
+    border: 1px solid rgba(180, 200, 232, 0.15);
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -198,7 +139,7 @@ h1 {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(214, 115, 115, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(180, 200, 232, 0.1), transparent);
     transition: left 0.6s ease;
 }
 
@@ -214,8 +155,8 @@ h1 {
     transform: translateY(-8px) scale(1.02);
     box-shadow: 
         0 20px 40px rgba(0, 0, 0, 0.2),
-        0 0 30px rgba(214, 115, 115, 0.1);
-    border-color: rgba(214, 115, 115, 0.3);
+        0 0 30px rgba(180, 200, 232, 0.1);
+    border-color: rgba(180, 200, 232, 0.3);
 }
 
 .card-content i {
@@ -239,7 +180,7 @@ h1 {
     font-weight: 400;
 }
 
-/* Cores específicas dos cards - tons de vermelho */
+/* Cores específicas dos cards - tons masculinos pastéis */
 .whatsapp-card {
     background: linear-gradient(135deg, rgba(37, 211, 102, 0.15), rgba(37, 211, 102, 0.05));
     border-color: rgba(37, 211, 102, 0.2);
@@ -250,30 +191,21 @@ h1 {
 }
 
 .instagram-card {
-    background: linear-gradient(135deg, rgba(214, 115, 115, 0.2), rgba(214, 115, 115, 0.08));
-    border-color: rgba(214, 115, 115, 0.25);
+    background: linear-gradient(135deg, rgba(132, 161, 200, 0.2), rgba(132, 161, 200, 0.08));
+    border-color: rgba(132, 161, 200, 0.25);
 }
 
 .instagram-card:hover {
-    background: linear-gradient(135deg, rgba(214, 115, 115, 0.25), rgba(214, 115, 115, 0.12));
-}
-
-.appointment-card {
-    background: linear-gradient(135deg, rgba(197, 90, 90, 0.2), rgba(197, 90, 90, 0.08));
-    border-color: rgba(197, 90, 90, 0.25);
-}
-
-.appointment-card:hover {
-    background: linear-gradient(135deg, rgba(197, 90, 90, 0.25), rgba(197, 90, 90, 0.12));
+    background: linear-gradient(135deg, rgba(132, 161, 200, 0.25), rgba(132, 161, 200, 0.12));
 }
 
 .portfolio-card {
-    background: linear-gradient(135deg, rgba(139, 38, 53, 0.2), rgba(139, 38, 53, 0.08));
-    border-color: rgba(139, 38, 53, 0.25);
+    background: linear-gradient(135deg, rgba(107, 142, 178, 0.2), rgba(107, 142, 178, 0.08));
+    border-color: rgba(107, 142, 178, 0.25);
 }
 
 .portfolio-card:hover {
-    background: linear-gradient(135deg, rgba(139, 38, 53, 0.25), rgba(139, 38, 53, 0.12));
+    background: linear-gradient(135deg, rgba(107, 142, 178, 0.25), rgba(107, 142, 178, 0.12));
 }
 
 .links-section {
@@ -726,256 +658,5 @@ footer {
         display: grid;
         grid-template-columns: 1fr;
         gap: 20px;
-    }
-}
-
-/* Melhorar visibilidade do select */
-.form-group select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 16px;
-    cursor: pointer;
-}
-
-/* Estilos para as opções do select */
-.form-group select option {
-    background: #1b2d3e;
-    color: white;
-    padding: 10px;
-}
-
-.form-group select option:hover {
-    background: #2a3f54;
-}
-
-.form-group select option:checked {
-    background: #84a1c8;
-    color: #1b2d3e;
-}
-
-/* Adicionar no final do arquivo */
-
-/* Calendário */
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    margin: 20px 0;
-}
-
-.calendar-header {
-    text-align: center;
-    font-weight: bold;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    color: #fff;
-}
-
-.calendar-day {
-    text-align: center;
-    padding: 15px 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #fff;
-}
-
-.calendar-day:hover:not(.past):not(.empty) {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-}
-
-.calendar-day.selected {
-    background: #4CAF50;
-    color: white;
-}
-
-.calendar-day.today {
-    background: rgba(76, 175, 80, 0.3);
-    border: 2px solid #4CAF50;
-}
-
-.calendar-day.past {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-.calendar-day.empty {
-    background: transparent;
-    cursor: default;
-}
-
-.month-year-selector {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px 0;
-}
-
-.month-year-selector button {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.month-year-selector button:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-/* Horários */
-.time-slots {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.time-slot {
-    text-align: center;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #fff;
-}
-
-.time-slot:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-}
-
-.time-slot.selected {
-    background: #4CAF50;
-    color: white;
-}
-
-/* Tablets e telas médias */
-@media (max-width: 768px) {
-    .calendar {
-        gap: 6px;
-        padding: 15px;
-        margin-bottom: 20px;
-    }
-    
-    .calendar-day {
-        min-height: 38px;
-        font-size: 0.85rem;
-        padding: 8px 4px;
-    }
-    
-    .calendar-header {
-        font-size: 0.8rem;
-        padding: 8px 3px;
-    }
-    
-    .time-slots {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-    }
-    
-    .time-slot {
-        padding: 12px 8px;
-        font-size: 0.9rem;
-    }
-}
-
-/* Smartphones */
-@media (max-width: 480px) {
-    .container {
-        padding: 20px 15px;
-        max-width: 100%;
-    }
-    
-    .calendar {
-        gap: 4px;
-        padding: 12px;
-        margin-bottom: 15px;
-    }
-    
-    .calendar-day {
-        min-height: 40px;
-        font-size: 0.8rem;
-        padding: 6px 2px;
-    }
-    
-    .calendar-header {
-        font-size: 0.75rem;
-        padding: 6px 2px;
-    }
-    
-    .time-slots {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-    
-    .time-slot {
-        padding: 10px 6px;
-        font-size: 0.85rem;
-    }
-    
-    .month-year-selector {
-        margin: 15px 0;
-    }
-    
-    .month-year-selector button {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-    }
-}
-
-/* Smartphones muito pequenos */
-@media (max-width: 360px) {
-    .calendar {
-        gap: 3px;
-        padding: 10px;
-    }
-    
-    .calendar-day {
-        min-height: 28px;
-        font-size: 0.75rem;
-        padding: 4px 1px;
-    }
-    
-    .calendar-header {
-        font-size: 0.7rem;
-        padding: 5px 1px;
-    }
-    
-    .time-slots {
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
-    }
-    
-    .time-slot {
-        padding: 8px 4px;
-        font-size: 0.8rem;
-    }
-}
-
-/* Landscape em dispositivos móveis */
-@media (max-width: 768px) and (orientation: landscape) {
-    .calendar {
-        gap: 5px;
-        padding: 10px;
-    }
-    
-    .calendar-day {
-        min-height: 30px;
-        font-size: 0.8rem;
-    }
-    
-    .time-slots {
-        grid-template-columns: repeat(3, 1fr);
     }
 }
