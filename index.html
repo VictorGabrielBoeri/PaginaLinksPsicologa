@@ -9,6 +9,387 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Notiflix CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-3.2.6.min.css">
+    <script>
+        // ========================================
+// CONFIGURAÇÃO DINÂMICA DO SITE
+// ========================================
+
+// Função principal para carregar e aplicar configurações do config.json
+async function loadSiteConfig() {
+    try {
+        console.log('🔄 Carregando configuração do site...');
+        
+        const response = await fetch('config.json');
+        if (!response.ok) {
+            console.log('⚠️ config.json não encontrado, usando configuração padrão');
+            applyDefaultConfig();
+            return;
+        }
+        
+        const config = await response.json();
+        console.log('✅ Configuração carregada:', config);
+        
+        // Aplicar todas as configurações
+        applyProfileConfig(config.profile);
+        applySocialLinksConfig(config.socialLinks || config.links);
+        applyThemeConfig(config.theme);
+        applyAppointmentConfig(config.appointment);
+        
+        console.log('🎉 Site configurado com sucesso!');
+        
+    } catch (error) {
+        console.error('❌ Erro ao carregar configuração:', error);
+        applyDefaultConfig();
+    }
+}
+
+// Função para aplicar configuração padrão
+function applyDefaultConfig() {
+    console.log('🔧 Aplicando configuração padrão...');
+    
+    const defaultConfig = {
+        profile: {
+            name: 'Maria Silva',
+            profession: 'Designer Gráfica',
+            image: 'img/perfil.jpg'
+        },
+        socialLinks: {
+            whatsapp: 'https://wa.me/5511999999999',
+            instagram: 'https://instagram.com/mariasilva',
+            portfolio: 'https://portfolio.mariasilva.com'
+        },
+        theme: {
+            primaryColor: '#6366f1',
+            secondaryColor: '#8b5cf6',
+            backgroundColor: '#0f0f23',
+            textColor: '#ffffff'
+        }
+    };
+    
+    applyProfileConfig(defaultConfig.profile);
+    applySocialLinksConfig(defaultConfig.socialLinks);
+    applyThemeConfig(defaultConfig.theme);
+}
+
+// ========================================
+// CONFIGURAÇÃO DO PERFIL
+// ========================================
+
+function applyProfileConfig(profile) {
+    if (!profile) return;
+    
+    console.log('👤 Aplicando configuração do perfil:', profile);
+    
+    // Atualizar título da página
+    if (profile.name && profile.profession) {
+        document.title = `${profile.name} - ${profile.profession}`;
+        console.log(`📄 Título atualizado: ${document.title}`);
+    }
+    
+    // Atualizar nome
+    if (profile.name) {
+        const nameElements = document.querySelectorAll('h1');
+        nameElements.forEach(element => {
+            element.textContent = profile.name;
+        });
+        console.log(`✏️ Nome atualizado: ${profile.name}`);
+    }
+    
+    // Atualizar profissão/subtítulo
+    if (profile.profession) {
+        const professionElements = document.querySelectorAll('.subtitle');
+        professionElements.forEach(element => {
+            element.textContent = profile.profession;
+        });
+        console.log(`💼 Profissão atualizada: ${profile.profession}`);
+    }
+    
+    // Atualizar imagem de perfil
+    if (profile.image) {
+        const imgElements = document.querySelectorAll('#profileImg, .profile-image img');
+        imgElements.forEach(element => {
+            element.src = profile.image;
+            element.alt = profile.name || 'Perfil';
+        });
+        console.log(`🖼️ Imagem atualizada: ${profile.image}`);
+    }
+    
+    // Atualizar biografia se existir
+    if (profile.bio) {
+        const bioElements = document.querySelectorAll('.bio, .description');
+        bioElements.forEach(element => {
+            element.textContent = profile.bio;
+        });
+        console.log(`📝 Biografia atualizada: ${profile.bio}`);
+    }
+}
+
+// ========================================
+// CONFIGURAÇÃO DOS LINKS SOCIAIS
+// ========================================
+
+function applySocialLinksConfig(socialLinks) {
+    if (!socialLinks) return;
+    
+    console.log('🔗 Aplicando configuração dos links sociais:', socialLinks);
+    
+    // Configurar WhatsApp
+    if (socialLinks.whatsapp) {
+        const whatsappCards = document.querySelectorAll('.whatsapp-card, .link-card[data-type="whatsapp"]');
+        whatsappCards.forEach(card => {
+            card.style.cursor = 'pointer';
+            card.onclick = () => {
+                openLink(socialLinks.whatsapp);
+                trackClick('whatsapp');
+            };
+        });
+        console.log(`📱 WhatsApp configurado: ${socialLinks.whatsapp}`);
+    }
+    
+    // Configurar Instagram
+    if (socialLinks.instagram) {
+        const instagramCards = document.querySelectorAll('.instagram-card, .link-card[data-type="instagram"]');
+        instagramCards.forEach(card => {
+            card.style.cursor = 'pointer';
+            card.onclick = () => {
+                openLink(socialLinks.instagram);
+                trackClick('instagram');
+            };
+        });
+        console.log(`📸 Instagram configurado: ${socialLinks.instagram}`);
+    }
+    
+    // Configurar Portfólio
+    if (socialLinks.portfolio) {
+        const portfolioCards = document.querySelectorAll('.portfolio-card, .link-card[data-type="portfolio"]');
+        portfolioCards.forEach(card => {
+            card.style.cursor = 'pointer';
+            card.onclick = () => {
+                openLink(socialLinks.portfolio);
+                trackClick('portfolio');
+            };
+        });
+        console.log(`💼 Portfólio configurado: ${socialLinks.portfolio}`);
+    }
+    
+    // Configurar LinkedIn
+    if (socialLinks.linkedin) {
+        const linkedinCards = document.querySelectorAll('.linkedin-card, .link-card[data-type="linkedin"]');
+        linkedinCards.forEach(card => {
+            card.style.cursor = 'pointer';
+            card.onclick = () => {
+                openLink(socialLinks.linkedin);
+                trackClick('linkedin');
+            };
+        });
+        console.log(`💼 LinkedIn configurado: ${socialLinks.linkedin}`);
+    }
+    
+    // Configurar outros links personalizados
+    if (Array.isArray(socialLinks.customLinks)) {
+        socialLinks.customLinks.forEach((link, index) => {
+            if (link.url && link.title) {
+                const customCards = document.querySelectorAll(`.custom-link-${index}, .link-card[data-index="${index}"]`);
+                customCards.forEach(card => {
+                    card.style.cursor = 'pointer';
+                    card.onclick = () => {
+                        openLink(link.url);
+                        trackClick(`custom-${index}`);
+                    };
+                    
+                    // Atualizar texto se existir
+                    const titleElement = card.querySelector('h3');
+                    if (titleElement) titleElement.textContent = link.title;
+                    
+                    const descElement = card.querySelector('p');
+                    if (descElement && link.description) descElement.textContent = link.description;
+                });
+                console.log(`🔗 Link customizado ${index} configurado: ${link.title} -> ${link.url}`);
+            }
+        });
+    }
+}
+
+// ========================================
+// CONFIGURAÇÃO DO TEMA
+// ========================================
+
+function applyThemeConfig(theme) {
+    if (!theme) return;
+    
+    console.log('🎨 Aplicando configuração do tema:', theme);
+    
+    const root = document.documentElement;
+    
+    // Aplicar cores do tema
+    if (theme.primaryColor) {
+        root.style.setProperty('--primary-color', theme.primaryColor);
+        console.log(`🎨 Cor primária: ${theme.primaryColor}`);
+    }
+    
+    if (theme.secondaryColor) {
+        root.style.setProperty('--secondary-color', theme.secondaryColor);
+        console.log(`🎨 Cor secundária: ${theme.secondaryColor}`);
+    }
+    
+    if (theme.backgroundColor) {
+        root.style.setProperty('--background-color', theme.backgroundColor);
+        document.body.style.backgroundColor = theme.backgroundColor;
+        console.log(`🎨 Cor de fundo: ${theme.backgroundColor}`);
+    }
+    
+    if (theme.textColor) {
+        root.style.setProperty('--text-color', theme.textColor);
+        document.body.style.color = theme.textColor;
+        console.log(`🎨 Cor do texto: ${theme.textColor}`);
+    }
+    
+    if (theme.accentColor) {
+        root.style.setProperty('--accent-color', theme.accentColor);
+        console.log(`🎨 Cor de destaque: ${theme.accentColor}`);
+    }
+    
+    // Aplicar fonte personalizada
+    if (theme.fontFamily) {
+        root.style.setProperty('--font-family', theme.fontFamily);
+        document.body.style.fontFamily = theme.fontFamily;
+        console.log(`🔤 Fonte: ${theme.fontFamily}`);
+    }
+    
+    // Aplicar bordas arredondadas
+    if (theme.borderRadius) {
+        root.style.setProperty('--border-radius', theme.borderRadius);
+        console.log(`📐 Bordas arredondadas: ${theme.borderRadius}`);
+    }
+}
+
+// ========================================
+// CONFIGURAÇÃO DO AGENDAMENTO
+// ========================================
+
+function applyAppointmentConfig(appointment) {
+    if (!appointment) return;
+    
+    console.log('📅 Aplicando configuração do agendamento:', appointment);
+    
+    // Configurar horários disponíveis
+    if (appointment.availableHours) {
+        window.availableHours = appointment.availableHours;
+        console.log('⏰ Horários disponíveis configurados:', appointment.availableHours);
+    }
+    
+    // Configurar dias da semana disponíveis
+    if (appointment.availableDays) {
+        window.availableDays = appointment.availableDays;
+        console.log('📆 Dias disponíveis configurados:', appointment.availableDays);
+    }
+    
+    // Configurar duração da consulta
+    if (appointment.duration) {
+        window.appointmentDuration = appointment.duration;
+        console.log(`⏱️ Duração da consulta: ${appointment.duration} minutos`);
+    }
+}
+
+// ========================================
+// FUNÇÕES AUXILIARES
+// ========================================
+
+// Função para abrir links
+function openLink(url) {
+    if (!url) return;
+    
+    console.log(`🔗 Abrindo link: ${url}`);
+    
+    // Verificar se é um link do WhatsApp
+    if (url.includes('wa.me') || url.includes('whatsapp.com')) {
+        window.open(url, '_blank');
+        return;
+    }
+    
+    // Verificar se é um link externo
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+        window.open(url, '_blank');
+        return;
+    }
+    
+    // Link interno
+    window.location.href = url;
+}
+
+// Função para rastrear cliques
+function trackClick(linkType) {
+    console.log(`📊 Clique rastreado: ${linkType}`);
+    
+    // Integração com Google Analytics (se disponível)
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'click', {
+            'event_category': 'social_link',
+            'event_label': linkType
+        });
+    }
+    
+    // Integração com outros sistemas de análise
+    if (typeof analytics !== 'undefined') {
+        analytics.track('Link Clicked', {
+            type: linkType,
+            timestamp: new Date().toISOString()
+        });
+    }
+}
+
+// Função para atualizar imagem de perfil
+function updateProfileImage(newImageUrl) {
+    const imgElements = document.querySelectorAll('#profileImg, .profile-image img');
+    imgElements.forEach(element => {
+        element.src = newImageUrl;
+    });
+    console.log(`🖼️ Imagem de perfil atualizada: ${newImageUrl}`);
+}
+
+// Função para recarregar configuração
+function reloadConfig() {
+    console.log('🔄 Recarregando configuração...');
+    loadSiteConfig();
+}
+
+// ========================================
+// INICIALIZAÇÃO
+// ========================================
+
+// Carregar configuração quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Inicializando site dinâmico...');
+    loadSiteConfig();
+});
+
+// Recarregar configuração quando a janela ganhar foco (útil para desenvolvimento)
+window.addEventListener('focus', function() {
+    // Só recarrega se estiver em desenvolvimento (localhost)
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        console.log('🔄 Recarregando configuração (modo desenvolvimento)...');
+        setTimeout(loadSiteConfig, 500);
+    }
+});
+
+// Expor funções globalmente para depuração
+window.siteConfig = {
+    reload: reloadConfig,
+    updateProfileImage: updateProfileImage,
+    openLink: openLink,
+    trackClick: trackClick
+};
+
+console.log('✅ Sistema de configuração dinâmica carregado!');
+console.log('🛠️ Para depuração, use: window.siteConfig.reload()');
+
+// ========================================
+// RESTO DO CÓDIGO ORIGINAL (se existir)
+// ========================================
+
+// Aqui você deve manter todo o código original do script.js
+// como o modal de agendamento, efeitos, etc.
+    </script>
 </head>
 <body>
     <div class="container">
