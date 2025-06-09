@@ -1,133 +1,85 @@
 {
-  "siteName": "Maria Silva - Designer Gráfica",
-  "description": "Links importantes e informações de contato",
-  "photoUrl": "img/perfil.jpg",
+  "site": {
+    "title": "Seu Nome - Designer Gráfico",
+    "description": "Transformando ideias em designs únicos",
+    "favicon": "https://via.placeholder.com/32x32"
+  },
   "theme": {
-    "primaryColor": "#6f42c1",
-    "secondaryColor": "#495057",
-    "textColor": "#ffffff",
-    "backgroundColor": "#f8f9fa",
-    "accentColor": "#28a745"
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#8b5cf6",
+    "backgroundColor": "#0f172a",
+    "textColor": "#f1f5f9"
   },
   "profile": {
-    "name": "Maria Silva",
-    "title": "Designer Gráfica",
-    "photo": "img/perfil.jpg",
-    "bio": "Especialista em design gráfico com foco em identidade visual e materiais promocionais. Transformo ideias em designs impactantes que conectam marcas aos seus públicos!"
+    "name": "Seu Nome",
+    "title": "Designer Gráfico",
+    "bio": "Especialista em identidade visual e design digital. Criando soluções visuais que conectam marcas aos seus públicos.",
+    "image": "https://via.placeholder.com/150x150",
+    "location": "São Paulo, SP",
+    "experience": "5+ anos de experiência"
   },
   "links": [
     {
-      "id": "agendamento",
-      "title": "Agendar Reunião",
-      "description": "Vamos conversar sobre seu projeto!",
-      "url": "#appointmentModal",
-      "icon": "fas fa-calendar-check",
-      "color": "#28a745",
-      "active": true,
-      "type": "modal",
-      "cssClass": "appointment-card"
-    },
-    {
-      "id": "whatsapp",
-      "title": "Contato Direto",
-      "description": "Tire suas dúvidas pelo WhatsApp!",
-      "url": "https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre seus serviços de design.",
-      "icon": "fab fa-whatsapp",
-      "color": "#25d366",
-      "active": true,
-      "type": "external",
-      "cssClass": "whatsapp-card"
-    },
-    {
-      "id": "instagram",
-      "title": "Instagram",
-      "description": "Veja meus trabalhos criativos!",
-      "url": "https://instagram.com/mariasilva_design",
-      "icon": "fab fa-instagram",
-      "color": "#e4405f",
-      "active": true,
-      "type": "external",
-      "cssClass": "instagram-card"
-    },
-    {
-      "id": "portfolio",
-      "title": "Meu Portfólio",
-      "description": "Conheça meus projetos e trabalhos!",
-      "url": "https://portfolio.mariasilva.com",
+      "title": "Portfolio",
+      "url": "https://seu-portfolio.com",
       "icon": "fas fa-briefcase",
-      "color": "#6f42c1",
-      "active": true,
       "type": "external",
-      "cssClass": "portfolio-card"
+      "description": "Veja meus trabalhos",
+      "color": "#6366f1"
+    },
+    {
+      "title": "Agendar Consulta",
+      "url": "#",
+      "icon": "fas fa-calendar-alt",
+      "type": "modal",
+      "description": "Agende uma conversa",
+      "color": "#10b981"
+    },
+    {
+      "title": "Instagram",
+      "url": "https://instagram.com/seuusuario",
+      "icon": "fab fa-instagram",
+      "type": "social",
+      "description": "@seuusuario",
+      "color": "#e1306c"
     }
   ],
+  "contact": {
+    "email": "contato@seuemail.com",
+    "phone": "+5511999999999",
+    "whatsapp": "+5511999999999",
+    "address": "São Paulo, SP"
+  },
   "appointment": {
     "enabled": true,
-    "types": [
-      {
-        "value": "briefing",
-        "label": "Briefing inicial",
-        "description": "Primeira conversa sobre o projeto"
-      },
-      {
-        "value": "apresentacao",
-        "label": "Apresentação de projeto",
-        "description": "Apresentação de propostas e ideias"
-      },
-      {
-        "value": "online",
-        "label": "Reunião online",
-        "description": "Reunião virtual por videochamada"
-      }
-    ],
+    "whatsappNumber": "+5511999999999",
     "workingHours": {
-      "monday": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
-      "tuesday": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
-      "wednesday": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
-      "thursday": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
-      "friday": ["09:00", "10:00", "11:00", "14:00", "15:00"],
-      "saturday": [],
-      "sunday": []
+      "start": "08:00",
+      "end": "18:00",
+      "lunch": {
+        "start": "12:00",
+        "end": "14:00"
+      }
     },
-    "duration": 60,
+    "meetingTypes": [
+      "Consulta Inicial",
+      "Apresentação de Projeto",
+      "Reunião de Briefing",
+      "Aprovação Final"
+    ],
     "timezone": "America/Sao_Paulo"
   },
-  "contact": {
-    "email": "contato@mariasilva.com",
-    "phone": "+55 11 99999-9999",
-    "whatsapp": "+55 11 99999-9999",
-    "address": "São Paulo, SP",
-    "website": "https://mariasilva.com"
+  "footer": {
+    "text": "© 2024 Seu Nome. Todos os direitos reservados.",
+    "showSocialLinks": true
   },
-  "settings": {
-    "showFooter": true,
-    "footerText": "© 2025 Maria Silva. Todos os direitos reservados.",
-    "enableAppointment": true,
-    "appointmentType": "modal",
-    "enableNotifications": true,
-    "language": "pt-BR",
-    "analytics": {
-      "googleAnalytics": "",
-      "facebookPixel": ""
-    }
+  "analytics": {
+    "googleAnalytics": "G-XXXXXXXXXX",
+    "facebookPixel": ""
   },
   "integrations": {
-    "notiflix": {
-      "enabled": true,
-      "version": "3.2.6",
-      "config": {
-        "timeout": 3000,
-        "position": "right-top",
-        "cssAnimationStyle": "fade"
-      }
-    },
-    "fontAwesome": {
-      "enabled": true,
-      "version": "6.0.0"
-    },
-    "googleFonts": {
-      "enabled": true,
-      "families": ["Inter:wght@400;500;700;800"]
-    }
+    "notiflix": true,
+    "fontAwesome": true,
+    "googleFonts": ["Inter:300,400,500,600,700"]
   }
 }
