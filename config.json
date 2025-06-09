@@ -3,11 +3,11 @@
   "description": "",
   "photoUrl": "",
   "theme": {
-    "primaryColor": "#e8a6a6",
+    "primaryColor": "#ff0000",
     "secondaryColor": "#ffffff",
-    "backgroundColor": "#a77272",
+    "backgroundColor": "#000000",
     "textColor": "#2d3436",
-    "particleColor": "#6366f1",
+    "particleColor": "#060afe",
     "profileBorderColor": "#4c00ff",
     "linkHoverColor": "#a855f7"
   },
