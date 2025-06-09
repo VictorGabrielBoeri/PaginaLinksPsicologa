@@ -1,112 +1,981 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   VARIÁVEIS DE TEMA DINÂMICAS
+   ======================================== */
+
+/* Adicionar ao seu CSS existente */
+:root {
+  --primary-color: #6366f1;
+  --secondary-color: #8b5cf6;
+  --background-color: #0f172a;
+  --particle-color: #6366f1;
+  --profile-border-color: #8b5cf6;
+  --link-hover-color: #6366f1;
+}
+
+/* Usar as variáveis no CSS */
 body {
-    background-color: #f8f9fa;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
 }
 
-.navbar-brand {
-    font-weight: bold;
+.profile-image {
+  border: 3px solid var(--profile-border-color);
 }
 
-.card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+.link-card {
+  transition: all 0.3s ease;
 }
 
-.card:hover {
+.link-card:hover {
+  background-color: var(--link-hover-color);
+  transform: translateY(-2px);
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.link-card {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-normal);
+}
+
+.link-card:hover {
     transform: translateY(-2px);
-}
-
-.table th {
-    border-top: none;
-    font-weight: 600;
-    color: #495057;
-}
-
-.badge {
-    font-size: 0.75em;
-}
-
-.btn {
-    border-radius: 6px;
-    font-weight: 500;
+    box-shadow: var(--shadow-lg);
 }
 
 .modal-content {
+    background: var(--background-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Botões dinâmicos */
+.btn-primary {
+    background: var(--primary-color);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.btn-secondary {
+    background: var(--secondary-color);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+}
+
+/* Resto do seu CSS original aqui... */
+
+/* Adicionar efeito de partículas no fundo */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(214, 115, 115, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(197, 90, 90, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(139, 38, 53, 0.05) 0%, transparent 50%);
+    z-index: -1;
+    animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.container {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 35px;
+}
+
+/* Melhorias na seção do perfil */
+.profile-section {
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+    position: relative;
+}
+
+.profile-image {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid rgba(214, 115, 115, 0.3);
+    box-shadow: 
+        0 0 30px rgba(214, 115, 115, 0.2),
+        0 0 60px rgba(139, 38, 53, 0.1);
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.profile-image::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #D67373, #C55A5A, #8B2635);
+    z-index: -1;
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.profile-image:hover {
+    transform: scale(1.08);
+    box-shadow: 
+        0 0 40px rgba(214, 115, 115, 0.4),
+        0 0 80px rgba(139, 38, 53, 0.2);
+}
+
+h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #fff 0%, #D67373 50%, #C55A5A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(214, 115, 115, 0.3);
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    color: rgba(255, 182, 193, 0.9);
+    margin-bottom: 25px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.description {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+}
+
+/* Melhorias nos cards */
+.link-card {
+    background: rgba(214, 115, 115, 0.08);
+    border-radius: 20px;
+    padding: 25px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(214, 115, 115, 0.15);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.link-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(214, 115, 115, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.link-card:hover::before {
+    left: 100%;
+}
+
+.card-text {
+    margin: 20px 0px 20px 0px;
+}
+
+.link-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.2),
+        0 0 30px rgba(214, 115, 115, 0.1);
+    border-color: rgba(214, 115, 115, 0.3);
+}
+
+.card-content i {
+    font-size: 2.2rem;
+    width: 55px;
+    text-align: center;
+    filter: drop-shadow(0 0 10px currentColor);
+}
+
+.card-text h3 {
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+}
+
+.card-text p {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+/* Cores específicas dos cards - tons de vermelho */
+.whatsapp-card {
+    background: linear-gradient(135deg, rgba(37, 211, 102, 0.15), rgba(37, 211, 102, 0.05));
+    border-color: rgba(37, 211, 102, 0.2);
+}
+
+.whatsapp-card:hover {
+    background: linear-gradient(135deg, rgba(37, 211, 102, 0.2), rgba(37, 211, 102, 0.08));
+}
+
+.instagram-card {
+    background: linear-gradient(135deg, rgba(214, 115, 115, 0.2), rgba(214, 115, 115, 0.08));
+    border-color: rgba(214, 115, 115, 0.25);
+}
+
+.instagram-card:hover {
+    background: linear-gradient(135deg, rgba(214, 115, 115, 0.25), rgba(214, 115, 115, 0.12));
+}
+
+.appointment-card {
+    background: linear-gradient(135deg, rgba(197, 90, 90, 0.2), rgba(197, 90, 90, 0.08));
+    border-color: rgba(197, 90, 90, 0.25);
+}
+
+.appointment-card:hover {
+    background: linear-gradient(135deg, rgba(197, 90, 90, 0.25), rgba(197, 90, 90, 0.12));
+}
+
+.portfolio-card {
+    background: linear-gradient(135deg, rgba(139, 38, 53, 0.2), rgba(139, 38, 53, 0.08));
+    border-color: rgba(139, 38, 53, 0.25);
+}
+
+.portfolio-card:hover {
+    background: linear-gradient(135deg, rgba(139, 38, 53, 0.25), rgba(139, 38, 53, 0.12));
+}
+
+.links-section {
+    display: grid;
+    gap: 20px;
+}
+
+/* Layout de 2 colunas apenas no desktop */
+@media (min-width: 768px) {
+    .container {
+        max-width: 600px;
+    }
+    
+    .links-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: start;
+    }
+}
+
+/* Para telas muito grandes (desktop) */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 650px;
+    }
+    
+    .links-section {
+        gap: 25px;
+    }
+}
+
+/* Footer melhorado */
+footer {
+    text-align: center;
+    padding: 25px 0;
+    color: rgba(180, 200, 232, 0.6);
+    font-size: 0.85rem;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+/* Responsividade melhorada */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 15px;
+        gap: 25px;
+    }
+    
+    h1 {
+        font-size: 2.3rem;
+    }
+    
+    .profile-image {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .link-card {
+        padding: 20px;
+    }
+}
+
+/* Card de Agendamento */
+.appointment-card {
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(74, 144, 226, 0.08));
+    border-color: rgba(74, 144, 226, 0.25);
+}
+
+.appointment-card:hover {
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.25), rgba(74, 144, 226, 0.12));
+}
+
+.appointment-card i {
+    color: #4a90e2;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1b2d3e 0%, #15293d 50%, #1e3a52 100%);
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(180, 200, 232, 0.2);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px) scale(0.9); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-header {
+    padding: 25px;
+    border-bottom: 1px solid rgba(180, 200, 232, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    color: #b4c8e8;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.close {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    line-height: 1;
+}
+
+.close:hover {
+    color: #b4c8e8;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.step h3 {
+    color: #b4c8e8;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Seletor de Mês/Ano */
+.month-year-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(180, 200, 232, 0.1);
+}
+
+.month-year-selector button {
+    background: rgba(180, 200, 232, 0.2);
+    border: none;
+    color: #b4c8e8;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.month-year-selector button:hover {
+    background: rgba(180, 200, 232, 0.3);
+    transform: scale(1.05);
+}
+
+#currentMonth {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+/* Calendário */
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    border: 1px solid rgba(180, 200, 232, 0.1);
+}
+
+.calendar-header {
+    text-align: center;
+    font-weight: 600;
+    color: #b4c8e8;
+    padding: 10px 5px;
+    font-size: 0.9rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+    min-height: 40px;
+}
+
+.calendar-day.available {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border: 1px solid rgba(180, 200, 232, 0.2);
+}
+
+.calendar-day.available:hover {
+    background: rgba(180, 200, 232, 0.2);
+    transform: scale(1.1);
+    border-color: rgba(180, 200, 232, 0.4);
+}
+
+.calendar-day.selected {
+    background: linear-gradient(135deg, #b4c8e8, #84a1c8);
+    color: #1b2d3e;
+    font-weight: 700;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(180, 200, 232, 0.4);
+}
+
+.calendar-day.unavailable {
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+}
+
+.calendar-day.other-month {
+    color: rgba(255, 255, 255, 0.2);
+    cursor: not-allowed;
+}
+
+/* Horários */
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.time-slot {
+    padding: 15px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(180, 200, 232, 0.2);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: white;
+}
+
+.time-slot:hover {
+    background: rgba(180, 200, 232, 0.2);
+    transform: translateY(-2px);
+    border-color: rgba(180, 200, 232, 0.4);
+}
+
+.time-slot.selected {
+    background: linear-gradient(135deg, #b4c8e8, #84a1c8);
+    color: #1b2d3e;
+    font-weight: 700;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(180, 200, 232, 0.3);
+}
+
+.time-slot.unavailable {
+    background: rgba(255, 255, 255, 0.02);
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Formulário */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #b4c8e8;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(180, 200, 232, 0.2);
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: rgba(180, 200, 232, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 15px rgba(180, 200, 232, 0.2);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Botões */
+.step-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.btn-next,
+.btn-back,
+.btn-confirm {
+    padding: 12px 25px;
     border: none;
     border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    flex: 1;
 }
 
-.form-control, .form-select {
-    border-radius: 6px;
-    border: 1px solid #dee2e6;
+.btn-next,
+.btn-confirm {
+    background: linear-gradient(135deg, #b4c8e8, #84a1c8);
+    color: #1b2d3e;
 }
 
-.form-control:focus, .form-select:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+.btn-next:hover,
+.btn-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(180, 200, 232, 0.3);
 }
 
-.status-ativo {
-    background-color: #d1edff;
-    color: #0c63e4;
+.btn-next:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.4);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
-.status-inativo {
-    background-color: #f8d7da;
-    color: #721c24;
+.btn-back {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(180, 200, 232, 0.2);
 }
 
-.status-manutencao {
-    background-color: #fff3cd;
-    color: #856404;
+.btn-back:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(180, 200, 232, 0.3);
 }
 
-.loading {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #3498db;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+.selected-date {
+    background: rgba(180, 200, 232, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: #b4c8e8;
+    font-weight: 500;
+    border: 1px solid rgba(180, 200, 232, 0.2);
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.appointment-summary {
+    background: rgba(180, 200, 232, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(180, 200, 232, 0.2);
 }
 
-.alert {
-    border: none;
-    border-radius: 8px;
+.appointment-summary p {
+    margin: 8px 0;
+    color: white;
+    font-size: 1rem;
 }
 
-.btn-group .btn {
-    margin-right: 5px;
+.appointment-summary strong {
+    color: #b4c8e8;
 }
 
-.btn-group .btn:last-child {
-    margin-right: 0;
-}
-
-@media (max-width: 768px) {
-    .card-body {
-        padding: 1rem;
+/* Responsividade existente mantida */
+@media (max-width: 480px) {
+    .modal-content {
+        margin: 2% auto;
+        width: 95%;
+        max-height: 95vh;
     }
     
-    .table-responsive {
-        font-size: 0.875rem;
+    .modal-header,
+    .modal-body {
+        padding: 20px 15px;
     }
     
-    .btn-group {
-        display: flex;
+    .calendar {
+        gap: 5px;
+        padding: 15px;
+    }
+    
+    .calendar-day {
+        min-height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .time-slots {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .step-buttons {
         flex-direction: column;
     }
     
-    .btn-group .btn {
-        margin-bottom: 5px;
-        margin-right: 0;
+    /* Manter 1 coluna no mobile */
+    .links-section {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+/* Melhorar visibilidade do select */
+.form-group select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    cursor: pointer;
+}
+
+/* Estilos para as opções do select */
+.form-group select option {
+    background: #1b2d3e;
+    color: white;
+    padding: 10px;
+}
+
+.form-group select option:hover {
+    background: #2a3f54;
+}
+
+.form-group select option:checked {
+    background: #84a1c8;
+    color: #1b2d3e;
+}
+
+/* Adicionar no final do arquivo */
+
+/* Calendário */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin: 20px 0;
+}
+
+.calendar-header {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    color: #fff;
+}
+
+.calendar-day {
+    text-align: center;
+    padding: 15px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #fff;
+}
+
+.calendar-day:hover:not(.past):not(.empty) {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.calendar-day.selected {
+    background: #4CAF50;
+    color: white;
+}
+
+.calendar-day.today {
+    background: rgba(76, 175, 80, 0.3);
+    border: 2px solid #4CAF50;
+}
+
+.calendar-day.past {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.calendar-day.empty {
+    background: transparent;
+    cursor: default;
+}
+
+.month-year-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.month-year-selector button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.month-year-selector button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Horários */
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.time-slot {
+    text-align: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #fff;
+}
+
+.time-slot:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.time-slot.selected {
+    background: #4CAF50;
+    color: white;
+}
+
+/* Tablets e telas médias */
+@media (max-width: 768px) {
+    .calendar {
+        gap: 6px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .calendar-day {
+        min-height: 38px;
+        font-size: 0.85rem;
+        padding: 8px 4px;
+    }
+    
+    .calendar-header {
+        font-size: 0.8rem;
+        padding: 8px 3px;
+    }
+    
+    .time-slots {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .time-slot {
+        padding: 12px 8px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 15px;
+        max-width: 100%;
+    }
+    
+    .calendar {
+        gap: 4px;
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .calendar-day {
+        min-height: 40px;
+        font-size: 0.8rem;
+        padding: 6px 2px;
+    }
+    
+    .calendar-header {
+        font-size: 0.75rem;
+        padding: 6px 2px;
+    }
+    
+    .time-slots {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .time-slot {
+        padding: 10px 6px;
+        font-size: 0.85rem;
+    }
+    
+    .month-year-selector {
+        margin: 15px 0;
+    }
+    
+    .month-year-selector button {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Smartphones muito pequenos */
+@media (max-width: 360px) {
+    .calendar {
+        gap: 3px;
+        padding: 10px;
+    }
+    
+    .calendar-day {
+        min-height: 28px;
+        font-size: 0.75rem;
+        padding: 4px 1px;
+    }
+    
+    .calendar-header {
+        font-size: 0.7rem;
+        padding: 5px 1px;
+    }
+    
+    .time-slots {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+    
+    .time-slot {
+        padding: 8px 4px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Landscape em dispositivos móveis */
+@media (max-width: 768px) and (orientation: landscape) {
+    .calendar {
+        gap: 5px;
+        padding: 10px;
+    }
+    
+    .calendar-day {
+        min-height: 30px;
+        font-size: 0.8rem;
+    }
+    
+    .time-slots {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
