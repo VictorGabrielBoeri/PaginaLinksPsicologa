@@ -1,51 +1,29 @@
 {
-  "siteName": "",
-  "description": "Links importantes e informações de contato",
-  "photoUrl": "https://paginalinks.netlify.app/img/perfil.jpg",
-  "theme": {
-    "primaryColor": "#ff0000",
-    "secondaryColor": "#000000",
-    "backgroundColor": "#c56767",
-    "textColor": "#2d3436"
-  },
+  "siteName": "Maria Silva - Designer Gráfica",
+  "description": "Página de links da designer Maria Silva",
   "profile": {
-    "name": "ELISON",
-    "title": "Designer Gráfico",
-    "bio": "Especialista em identidade visual e design digital",
-    "image": "",
-    "location": "",
-    "experience": ""
+    "name": "Maria Silva",
+    "title": "Designer Gráfica",
+    "bio": "Criando designs únicos e impactantes",
+    "photoUrl": "img/perfil.jpg",
+    "location": "São Paulo, SP",
+    "experience": "5 anos"
   },
-  "contact": {
-    "email": "",
-    "phone": "",
-    "whatsapp": "",
-    "address": ""
+  "theme": {
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#f8fafc",
+    "accentColor": "#10b981"
   },
   "appointment": {
-    "enabled": false,
-    "whatsappNumber": "",
+    "enabled": true,
+    "whatsappNumber": "5511999999999",
     "workingHours": {
-      "start": "08:00",
+      "start": "09:00",
       "end": "18:00"
     }
   },
-  "links": [
-    {
-      "id": 1,
-      "title": "Portfolio",
-      "url": "https://seu-portfolio.com",
-      "icon": "fas fa-briefcase",
-      "color": "#ff0000",
-      "active": true
-    },
-    {
-      "id": 2,
-      "title": "Agendar Consulta",
-      "url": "#",
-      "icon": "fas fa-calendar-alt",
-      "color": "#000000",
-      "active": true
-    }
-  ]
+  "socialLinks": {
+    "instagram": "https://instagram.com/mariasilva",
+    "portfolio": "https://portfolio.mariasilva.com"
+  }
 }
