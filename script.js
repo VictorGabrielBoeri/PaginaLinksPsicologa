@@ -192,12 +192,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // openLink('portfolio');
     // trackClick('Portfolio');
     
-    // Efeito de parallax suave no scroll
+    // Efeito de parallax suave no scroll (desabilitado no Safari mobile)
     window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const parallax = document.querySelector('.container');
-        const speed = scrolled * 0.5;
-        parallax.style.transform = `translateY(${speed}px)`;
+        // Detectar Safari mobile
+        const isSafariMobile = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        
+        if (!isSafariMobile) {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.container');
+            const speed = scrolled * 0.5;
+            parallax.style.transform = `translateY(${speed}px)`;
+        }
     });
     
     // Animação de entrada dos cards
@@ -335,7 +340,7 @@ function generateTimeSlots() {
         manha: {
             title: 'Manhã',
             icon: '🌅',
-            times: ['08:00', '09:00', '10:00', '11:00']
+            times: ['10:30', '11:30']
         },
         tarde: {
             title: 'Tarde',
@@ -552,5 +557,55 @@ window.addEventListener('click', function(event) {
     if (event.target === workModal) {
         workModal.style.display = 'none';
         document.body.style.overflow = 'auto';
+    }
+});
+
+function phoneMask(value) {
+    // Remove tudo que não é dígito
+    value = value.replace(/\D/g, '');
+    
+    // Aplica a máscara baseada no tamanho
+    if (value.length <= 10) {
+        // Telefone fixo: (11) 1234-5678
+        value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+    } else {
+        // Celular: (11) 91234-5678
+        value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    }
+    
+    return value;
+}
+
+// Aplicar máscara ao campo de telefone
+document.getElementById('clientPhone').addEventListener('input', function(e) {
+    let value = e.target.value;
+    
+    // Remove caracteres não numéricos para validação
+    let numbersOnly = value.replace(/\D/g, '');
+    
+    // Limita a 11 dígitos (DDD + 9 dígitos)
+    if (numbersOnly.length > 11) {
+        numbersOnly = numbersOnly.slice(0, 11);
+    }
+    
+    // Aplica a máscara
+    e.target.value = phoneMask(numbersOnly);
+});
+
+// Permitir apenas números e alguns caracteres especiais
+document.getElementById('clientPhone').addEventListener('keypress', function(e) {
+    // Permite: números, backspace, delete, tab, escape, enter
+    if ([8, 9, 27, 13, 46].indexOf(e.keyCode) !== -1 ||
+        // Permite: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+        (e.keyCode === 65 && e.ctrlKey === true) ||
+        (e.keyCode === 67 && e.ctrlKey === true) ||
+        (e.keyCode === 86 && e.ctrlKey === true) ||
+        (e.keyCode === 88 && e.ctrlKey === true)) {
+        return;
+    }
+    
+    // Permite apenas números
+    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
     }
 });

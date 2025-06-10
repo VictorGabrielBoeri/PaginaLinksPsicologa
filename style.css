@@ -63,15 +63,13 @@ body::before {
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-/* Adicionar margin aos elementos filhos */
-.container > * {
-    margin-bottom: 35px;
-}
-
-.container > *:last-child {
-    margin-bottom: 0;
+    gap: 35px;
+    /* Melhorar performance no Safari */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
 }
 
 /* Melhorias na seção do perfil */
