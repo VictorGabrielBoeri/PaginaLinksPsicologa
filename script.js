@@ -182,11 +182,15 @@ document.addEventListener('DOMContentLoaded', function() {
         trackClick('Instagram');
     });
     
-    // Conheça meu trabalho (changed from portfolio-card to work-card)
+    // Conheça meu trabalho (abre modal)
     document.querySelector('.work-card').addEventListener('click', function() {
-        openLink('portfolio');
-        trackClick('Portfolio');
+        document.getElementById('workModal').style.display = 'block';
+        trackClick('Portfolio Modal');
     });
+    
+    // Remover estas linhas:
+    // openLink('portfolio');
+    // trackClick('Portfolio');
     
     // Efeito de parallax suave no scroll
     window.addEventListener('scroll', function() {
