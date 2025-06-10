@@ -1,0 +1,37 @@
+{
+  "siteName": "",
+  "description": "fdsfsfd",
+  "photoUrl": "https://avatars.githubusercontent.com/u/168670877?v=4&size=64",
+  "theme": {
+    "primaryColor": "#ffffff",
+    "secondaryColor": "#ffffff",
+    "backgroundColor": "#6c84cb",
+    "textColor": "#2d3436",
+    "particleColor": "#ffffff",
+    "profileBorderColor": "#ffffff",
+    "linkHoverColor": "#ff0000"
+  },
+  "profile": {
+    "name": "TESES",
+    "title": "Psicologo",
+    "bio": "Especialista em terapia cognitivo-comportamental com mais de 10 anos de experiÃªncia.",
+    "image": "https://avatars.githubusercontent.com/u/168670877?v=4&size=64",
+    "location": "São Paulo",
+    "experience": "5 anos"
+  },
+  "contact": {
+    "email": "",
+    "phone": "",
+    "whatsapp": "5511999999999",
+    "address": ""
+  },
+  "appointment": {
+    "enabled": true,
+    "whatsappNumber": "5511999999999",
+    "workingHours": {
+      "start": "08:00",
+      "end": "18:00"
+    }
+  },
+  "links": []
+}
