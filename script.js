@@ -193,17 +193,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // trackClick('Portfolio');
     
     // Efeito de parallax suave no scroll (desabilitado no Safari mobile)
-    window.addEventListener('scroll', function() {
-        // Detectar Safari mobile
-        const isSafariMobile = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        
-        if (!isSafariMobile) {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.container');
-            const speed = scrolled * 0.5;
-            parallax.style.transform = `translateY(${speed}px)`;
-        }
-    });
+    // window.addEventListener('scroll', function() {
+    //     const scrolled = window.pageYOffset;
+    //     const parallax = document.querySelector('.container');
+    //     const speed = scrolled * 0.5;
+    //     parallax.style.transform = `translateY(${speed}px)`;
+    // });
     
     // Animação de entrada dos cards
     const cards = document.querySelectorAll('.link-card');

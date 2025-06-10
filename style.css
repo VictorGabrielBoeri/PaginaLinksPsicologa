@@ -1,19 +1,36 @@
+/* Correções específicas para Safari */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 body {
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Adicionar fallback para Safari */
-    background: #2c4a6b; /* Fallback */
+    /* Fallbacks específicos para Safari */
+    background: #2c4a6b !important; /* Fallback sólido */
     background: -webkit-radial-gradient(ellipse at center, #2c4a6b 0%, #1e3a52 30%, #15293d 70%, #0f1e2d 100%);
+    background: -moz-radial-gradient(ellipse at center, #2c4a6b 0%, #1e3a52 30%, #15293d 70%, #0f1e2d 100%);
     background: radial-gradient(ellipse at center, #2c4a6b 0%, #1e3a52 30%, #15293d 70%, #0f1e2d 100%);
     min-height: 100vh;
+    min-height: -webkit-fill-available; /* Safari mobile fix */
     color: white;
     overflow-x: hidden;
     position: relative;
+    /* Melhorar performance no Safari */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+/* Correção específica para Safari mobile */
+@supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
 }
 
 /* Adicionar efeito de partículas no fundo */
@@ -24,6 +41,12 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
+    /* Fallback sólido para Safari */
+    background: rgba(44, 74, 107, 0.1);
+    background-image: 
+        -webkit-radial-gradient(circle at 20% 80%, rgba(180, 200, 232, 0.1) 0%, transparent 50%),
+        -webkit-radial-gradient(circle at 80% 20%, rgba(132, 161, 200, 0.1) 0%, transparent 50%),
+        -webkit-radial-gradient(circle at 40% 40%, rgba(44, 74, 107, 0.05) 0%, transparent 50%);
     background-image: 
         radial-gradient(circle at 20% 80%, rgba(180, 200, 232, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(132, 161, 200, 0.1) 0%, transparent 50%),
