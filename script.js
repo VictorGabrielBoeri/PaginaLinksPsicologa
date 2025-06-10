@@ -56,24 +56,38 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('confirmAppointment').addEventListener('click', function() {
         console.log('Botão confirmar clicado');
         
-        const appointmentType = document.getElementById('appointmentType').value;
+        // Remove a linha do appointmentType
+        // const appointmentType = document.getElementById('appointmentType')?.value || '';
+        const clientName = document.getElementById('clientName')?.value || '';
+        const clientPhone = document.getElementById('clientPhone')?.value || '';
+        const clientEmail = document.getElementById('clientEmail')?.value || '';
+        const observations = document.getElementById('observations')?.value || '';
+        
+        // Pegar os novos campos adicionados com null checks
+        const tiposAbordagem = document.getElementById('tiposAbordagem')?.value || '';
+        const esportes = document.getElementById('esportes')?.value || '';
+        const dependenciaDigital = document.getElementById('dependenciaDigital')?.value || '';
+        const neuropsicologia = document.getElementById('neuropsicologia')?.value || '';
         const appointmentDate = selectedDate;
-        const appointmentTime = selectedTime;
-        const clientName = document.getElementById('clientName').value;
-        const clientPhone = document.getElementById('clientPhone').value;
-        const clientEmail = document.getElementById('clientEmail').value;
-        const observations = document.getElementById('observations').value;
+        const appointmentTimes = selectedTimes; // Array de horários múltiplos
+        
+        // Remove these duplicate declarations (lines 77-80):
+        // const tiposAbordagem = document.getElementById('tiposAbordagem').value;
+        // const esportes = document.getElementById('esportes').value;
+        // const dependenciaDigital = document.getElementById('dependenciaDigital').value;
+        // const neuropsicologia = document.getElementById('neuropsicologia').value;
         
         console.log('Valores:', {
-            appointmentType,
+            // appointmentType, // Remove esta linha
             appointmentDate,
-            appointmentTime,
+            appointmentTimes,
             clientName,
             clientPhone,
             clientEmail
         });
         
-        if (appointmentType && appointmentDate && appointmentTime && clientName && clientPhone && clientEmail) {
+        // Remove appointmentType da validação
+        if (appointmentDate && appointmentTimes.length > 0 && clientName && clientPhone && clientEmail) {
             // NOVA ABORDAGEM: usar split e parseInt para garantir a data correta
             const dateParts = appointmentDate.split('-');
             const year = parseInt(dateParts[0]);
@@ -83,40 +97,51 @@ document.addEventListener('DOMContentLoaded', function() {
             // Formatar manualmente sem usar Date()
             const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
             
-            let message = `Olá! Gostaria de agendar uma consulta:\n\n` +
-                         `Tipo: ${appointmentType}\n` +
-                         `Data: ${formattedDate}\n` +
-                         `Horário: ${appointmentTime}\n` +
-                         `Nome: ${clientName}\n` +
-                         `Telefone: ${clientPhone}`;
+            // CORREÇÃO: Usar appointmentTimes em vez de appointmentTime
+            let message = `*AGENDAMENTO DE CONSULTA*\n\n`;
+            message += `*Nome:* ${clientName}\n`;
+            message += `*WhatsApp:* ${clientPhone}\n`;
+            message += `*Email:* ${clientEmail}\n`;
+            message += `*Data:* ${formattedDate}\n`;
+            message += `*Horários:* ${appointmentTimes.join(', ')}\n`;
             
             // Adicionar observações se houver
             if (observations.trim()) {
-                message += `\nObservações: ${observations}`;
+                message += `\n *Observações:* ${observations}`;
             }
             
             const whatsappUrl = `https://wa.me/5585986106410?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
             
             // Fechar modal após enviar
-            appointmentModal.style.display = 'none';
+            document.getElementById('appointmentModal').style.display = 'none';
             
             // Limpar formulário e resetar seleções
             document.getElementById('appointmentForm').reset();
             selectedDate = null;
-            selectedTime = null;
+            selectedTimes = []; // CORREÇÃO: limpar array de horários
+            
+            // Limpar seleções visuais
+            document.querySelectorAll('.calendar-day.selected').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('.time-slot.selected').forEach(el => el.classList.remove('selected'));
             
             // Voltar para o primeiro step
             document.getElementById('step3').style.display = 'none';
             document.getElementById('step1').style.display = 'block';
+            
+            // Mostrar notificação de sucesso
+            Notiflix.Notify.success('Redirecionando para WhatsApp...', {
+                timeout: 3000,
+                position: 'center-top'
+            });
+            
         } else {
-            // Substituir alert por Notiflix
             // Verificar quais campos estão faltando
             let missingFields = [];
             
-            if (!appointmentDate) missingFields.push('Data');
-            if (!appointmentTime) missingFields.push('Horário');
             if (!appointmentType) missingFields.push('Tipo de consulta');
+            if (!appointmentDate) missingFields.push('Data');
+            if (!appointmentTimes.length) missingFields.push('Horário'); // CORREÇÃO: verificar array
             if (!clientName) missingFields.push('Nome');
             if (!clientPhone) missingFields.push('WhatsApp');
             if (!clientEmail) missingFields.push('E-mail');
@@ -157,8 +182,8 @@ document.addEventListener('DOMContentLoaded', function() {
         trackClick('Instagram');
     });
     
-    // Portfólio
-    document.querySelector('.portfolio-card').addEventListener('click', function() {
+    // Conheça meu trabalho (changed from portfolio-card to work-card)
+    document.querySelector('.work-card').addEventListener('click', function() {
         openLink('portfolio');
         trackClick('Portfolio');
     });
@@ -216,7 +241,7 @@ function updateProfileImage(imageUrl) {
 // Variáveis do calendário
 let currentDate = new Date();
 let selectedDate = null;
-let selectedTime = null;
+let selectedTimes = []; // Mudança: array para múltiplos horários
 
 // Função para gerar o calendário
 function generateCalendar(year, month) {
@@ -300,28 +325,85 @@ function updateMonthDisplay() {
 // Função para gerar horários disponíveis
 function generateTimeSlots() {
     const timeSlots = document.getElementById('timeSlots');
-    const slots = [
-        '08:00', '09:00', '10:00', '11:00', 
-        '14:00', '15:00', '16:00', '17:00'
-    ];
+    
+    // Organizar horários por turnos
+    const shifts = {
+        manha: {
+            title: 'Manhã',
+            icon: '🌅',
+            times: ['08:00', '09:00', '10:00', '11:00']
+        },
+        tarde: {
+            title: 'Tarde',
+            icon: '☀️',
+            times: ['14:00', '15:00', '16:00', '17:00']
+        },
+        noite: {
+            title: 'Noite',
+            icon: '🌙',
+            times: ['18:00', '19:00', '20:00', '21:00']
+        }
+    };
     
     let slotsHTML = '';
-    slots.forEach(time => {
-        slotsHTML += `<div class="time-slot" data-time="${time}">${time}</div>`;
+    
+    // Gerar HTML para cada turno
+    Object.keys(shifts).forEach(shiftKey => {
+        const shift = shifts[shiftKey];
+        slotsHTML += `
+            <div class="shift-section">
+                <h4 class="shift-title">
+                    <span class="shift-icon">${shift.icon}</span>
+                    ${shift.title}
+                </h4>
+                <div class="shift-slots">
+        `;
+        
+        shift.times.forEach(time => {
+            slotsHTML += `<div class="time-slot" data-time="${time}">${time}</div>`;
+        });
+        
+        slotsHTML += `
+                </div>
+            </div>
+        `;
     });
     
     timeSlots.innerHTML = slotsHTML;
     
-    // Adicionar eventos de clique nos horários
+    // Adicionar eventos de clique nos horários - MODIFICADO para múltipla seleção
     document.querySelectorAll('.time-slot').forEach(slot => {
         slot.addEventListener('click', function() {
-            document.querySelectorAll('.time-slot.selected').forEach(el => el.classList.remove('selected'));
-            this.classList.add('selected');
-            selectedTime = this.dataset.time;
-            document.getElementById('nextToForm').disabled = false;
+            const timeValue = this.dataset.time;
+            
+            if (this.classList.contains('selected')) {
+                // Se já está selecionado, remove da seleção
+                this.classList.remove('selected');
+                selectedTimes = selectedTimes.filter(time => time !== timeValue);
+            } else {
+                // Se não está selecionado, adiciona à seleção
+                this.classList.add('selected');
+                selectedTimes.push(timeValue);
+            }
+            
+            // Habilitar botão "Próximo" se pelo menos um horário estiver selecionado
+            document.getElementById('nextToForm').disabled = selectedTimes.length === 0;
+            
+            // Atualizar o texto do resumo
+            updateTimeSummary();
         });
     });
-} // <- Esta chave estava faltando
+}
+
+// Nova função para atualizar o resumo dos horários
+function updateTimeSummary() {
+    const summaryElement = document.getElementById('summaryTime');
+    if (selectedTimes.length > 0) {
+        summaryElement.textContent = selectedTimes.sort().join(', ');
+    } else {
+        summaryElement.textContent = '';
+    }
+}
 
 // Adicionar dentro do DOMContentLoaded, após os eventos do modal
 
@@ -357,11 +439,12 @@ document.getElementById('backToCalendar').addEventListener('click', function() {
     document.getElementById('step1').style.display = 'block';
 });
 
+// Around line 453 - Fix the summary display
 document.getElementById('nextToForm').addEventListener('click', function() {
     document.getElementById('step2').style.display = 'none';
     document.getElementById('step3').style.display = 'block';
     document.getElementById('summaryDate').textContent = new Date(selectedDate).toLocaleDateString('pt-BR');
-    document.getElementById('summaryTime').textContent = selectedTime;
+    document.getElementById('summaryTime').textContent = selectedTimes.join(', '); // Fixed: use selectedTimes array
 });
 
 document.getElementById('backToTime').addEventListener('click', function() {
@@ -374,4 +457,96 @@ appointmentBtn.addEventListener('click', function() {
     appointmentModal.style.display = 'block';
     updateMonthDisplay(); // Gerar o calendário
     trackClick('Agendamento');
+});
+
+
+function confirmAppointment() {
+    const name = document.getElementById('clientName').value;
+    const phone = document.getElementById('clientPhone').value;
+    const email = document.getElementById('clientEmail').value;
+    const appointmentType = document.getElementById('appointmentType').value;
+    const approachType = document.getElementById('approachType').value;
+    const sportsArea = document.getElementById('sportsArea').value;
+    const digitalDependency = document.getElementById('digitalDependency').value;
+    const neuropsychology = document.getElementById('neuropsychology').value;
+    const observations = document.getElementById('observations').value;
+    
+    // Verificar campos obrigatórios
+    const missingFields = [];
+    if (!name) missingFields.push('Nome');
+    if (!phone) missingFields.push('WhatsApp');
+    if (!email) missingFields.push('E-mail');
+    if (!appointmentType) missingFields.push('Tipo de consulta');
+    if (!approachType) missingFields.push('Tipos de abordagem');
+    if (!selectedDate) missingFields.push('Data');
+    if (!selectedTime) missingFields.push('Horário');
+    
+    if (missingFields.length > 0) {
+        let message = 'PREENCHA OS CAMPOS OBRIGATÓRIOS:\n\n';
+        missingFields.forEach(field => {
+            message += `\u2022 ${field}\n`;
+        });
+        
+        Notiflix.Notify.warning(message, {
+            timeout: 5000,
+            fontSize: '16px',
+            width: '300px'
+        });
+        return;
+    }
+    
+    // Construir mensagem do WhatsApp
+    const parts = selectedDate.split('-');
+    const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    
+    let message = `\u{1F4C5} *AGENDAMENTO DE CONSULTA*\n\n`;
+    message += `\u{1F464} *Nome:* ${name}\n`;
+    message += `\u{1F4F1} *WhatsApp:* ${phone}\n`;
+    message += `\u{1F4E7} *E-mail:* ${email}\n`;
+    message += `\u{1F4C5} *Data:* ${formattedDate}\n`;
+    message += `\u{1F551} *Horário:* ${selectedTime}\n`;
+    message += `\u{1F4CB} *Tipo de consulta:* ${appointmentType}\n`;
+    message += `\u{1F9E0} *Abordagem:* ${approachType}\n`;
+    
+    if (sportsArea) {
+        message += `\u{26BD} *Esporte:* ${sportsArea}\n`;
+    }
+    
+    if (digitalDependency) {
+        message += `\u{1F4F1} *Dependência digital:* ${digitalDependency}\n`;
+    }
+    
+    if (neuropsychology) {
+        message += `\u{1F9E0} *Neuropsicologia:* ${neuropsychology}\n`;
+    }
+    
+    if (observations) {
+        message += `\n\u{1F4DD} *Observações:*\n${observations}`;
+    }
+    
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/5511999999999?text=${encodedMessage}`;
+    
+    window.open(whatsappURL, '_blank');
+}
+
+
+// Modal Conheça meu trabalho
+document.getElementById('workBtn').addEventListener('click', function() {
+    document.getElementById('workModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+});
+
+document.getElementById('closeWorkModal').addEventListener('click', function() {
+    document.getElementById('workModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+});
+
+// Fechar modal clicando fora
+window.addEventListener('click', function(event) {
+    const workModal = document.getElementById('workModal');
+    if (event.target === workModal) {
+        workModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
 });

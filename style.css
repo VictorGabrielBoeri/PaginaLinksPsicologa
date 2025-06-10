@@ -208,33 +208,77 @@ h1 {
     background: linear-gradient(135deg, rgba(107, 142, 178, 0.25), rgba(107, 142, 178, 0.12));
 }
 
+/* Substituir as linhas 211-240 por: */
 .links-section {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
+    align-items: stretch;
 }
 
-/* Layout de 2 colunas apenas no desktop */
+/* Layout responsivo mantendo cards na mesma linha */
 @media (min-width: 768px) {
     .container {
         max-width: 600px;
     }
     
     .links-section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
-        align-items: start;
     }
 }
 
-/* Para telas muito grandes (desktop) */
+/* Para telas muito grandes (desktop) - manter 2 cards */
 @media (min-width: 1024px) {
     .container {
         max-width: 650px;
     }
     
     .links-section {
+        grid-template-columns: repeat(2, 1fr);
         gap: 25px;
+    }
+}
+
+/* Mobile - manter 2 cards por linha */
+@media (max-width: 767px) {
+    .links-section {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .link-card {
+        padding: 15px;
+        min-height: 120px;
+    }
+    
+    .card-text h3 {
+        font-size: 1rem;
+    }
+    
+    .card-text p {
+        font-size: 0.8rem;
+    }
+}
+
+/* Telas muito pequenas - ainda manter 2 cards */
+@media (max-width: 480px) {
+    .links-section {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .link-card {
+        padding: 12px;
+        min-height: 100px;
+    }
+    
+    .card-text h3 {
+        font-size: 0.9rem;
+    }
+    
+    .card-text p {
+        font-size: 0.75rem;
     }
 }
 
@@ -691,6 +735,367 @@ footer {
 
 /* Adicionar no final do arquivo */
 
+/* Card Conheça meu trabalho */
+.work-card {
+    background: linear-gradient(135deg, #6a4c93 0%, #9b59b6 100%);
+    border: 1px solid rgba(154, 89, 182, 0.3);
+}
+
+.work-card:hover {
+    box-shadow: 0 8px 25px rgba(154, 89, 182, 0.4);
+}
+
+/* Modal Conheça meu trabalho */
+.work-section {
+    margin-bottom: 30px;
+}
+
+.work-section h3 {
+    color: #b4c8e8;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.certificates-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.certificate-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(180, 200, 232, 0.1);
+    transition: all 0.3s ease;
+}
+
+.certificate-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(180, 200, 232, 0.2);
+}
+
+.certificate-item i {
+    font-size: 1.5rem;
+    color: #b4c8e8;
+    min-width: 30px;
+}
+
+.certificate-info h4 {
+    color: white;
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+}
+
+.certificate-info p {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.methodology-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.method-item {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(180, 200, 232, 0.1);
+    transition: all 0.3s ease;
+}
+
+.method-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(180, 200, 232, 0.2);
+    transform: translateY(-2px);
+}
+
+.method-icon {
+    min-width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #b4c8e8, #84a1c8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.method-icon i {
+    font-size: 1.2rem;
+    color: #1b2d3e;
+}
+
+.method-text h4 {
+    color: white;
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+}
+
+.method-text p {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+/* Responsividade para o modal */
+@media (max-width: 768px) {
+    .certificates-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .method-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .method-icon {
+        align-self: center;
+    }
+}
+
+/* Horários */
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.time-slot {
+    padding: 15px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(180, 200, 232, 0.2);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: white;
+}
+
+.time-slot:hover {
+    background: rgba(180, 200, 232, 0.2);
+    transform: translateY(-2px);
+    border-color: rgba(180, 200, 232, 0.4);
+}
+
+.time-slot.selected {
+    background: linear-gradient(135deg, #b4c8e8, #84a1c8);
+    color: #1b2d3e;
+    font-weight: 700;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(180, 200, 232, 0.3);
+}
+
+.time-slot.unavailable {
+    background: rgba(255, 255, 255, 0.02);
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Formulário */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #b4c8e8;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(180, 200, 232, 0.2);
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: rgba(180, 200, 232, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 15px rgba(180, 200, 232, 0.2);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Botões */
+.step-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.btn-next,
+.btn-back,
+.btn-confirm {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    flex: 1;
+}
+
+.btn-next,
+.btn-confirm {
+    background: linear-gradient(135deg, #b4c8e8, #84a1c8);
+    color: #1b2d3e;
+}
+
+.btn-next:hover,
+.btn-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(180, 200, 232, 0.3);
+}
+
+.btn-next:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.4);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-back {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(180, 200, 232, 0.2);
+}
+
+.btn-back:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(180, 200, 232, 0.3);
+}
+
+.selected-date {
+    background: rgba(180, 200, 232, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: #b4c8e8;
+    font-weight: 500;
+    border: 1px solid rgba(180, 200, 232, 0.2);
+}
+
+.appointment-summary {
+    background: rgba(180, 200, 232, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(180, 200, 232, 0.2);
+}
+
+.appointment-summary p {
+    margin: 8px 0;
+    color: white;
+    font-size: 1rem;
+}
+
+.appointment-summary strong {
+    color: #b4c8e8;
+}
+
+/* Responsividade existente mantida */
+@media (max-width: 480px) {
+    .modal-content {
+        margin: 2% auto;
+        width: 95%;
+        max-height: 95vh;
+    }
+    
+    .modal-header,
+    .modal-body {
+        padding: 20px 15px;
+    }
+    
+    .calendar {
+        gap: 5px;
+        padding: 15px;
+    }
+    
+    .calendar-day {
+        min-height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .time-slots {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .step-buttons {
+        flex-direction: column;
+    }
+    
+    /* Manter 1 coluna no mobile */
+    .links-section {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+/* Melhorar visibilidade do select */
+.form-group select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    cursor: pointer;
+}
+
+/* Estilos para as opções do select */
+.form-group select option {
+    background: #1b2d3e;
+    color: white;
+    padding: 10px;
+}
+
+.form-group select option:hover {
+    background: #2a3f54;
+}
+
+.form-group select option:checked {
+    background: #84a1c8;
+    color: #1b2d3e;
+}
+
+/* Adicionar no final do arquivo */
+
 /* Calendário */
 .calendar-grid {
     display: grid;
@@ -767,7 +1172,7 @@ footer {
 /* Horários */
 .time-slots {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     margin: 20px 0;
 }
@@ -909,5 +1314,80 @@ footer {
     
     .time-slots {
         grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Observação sobre horários */
+.schedule-note {
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-left: 4px solid #007bff;
+    border-radius: 4px;
+}
+
+.schedule-note p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.schedule-note i {
+    color: #007bff;
+    margin-right: 5px;
+}
+
+/* Estilos para os turnos */
+.shift-section {
+    margin-bottom: 25px;
+}
+
+.shift-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 8px;
+    color: white;
+}
+
+.shift-icon {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.shift-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+/* Responsivo para turnos */
+@media (max-width: 768px) {
+    .shift-slots {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .shift-title {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .shift-slots {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+    
+    .shift-title {
+        font-size: 0.9rem;
+    }
+    
+    .shift-icon {
+        font-size: 1rem;
     }
 }
