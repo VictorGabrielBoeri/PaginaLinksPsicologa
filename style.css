@@ -399,7 +399,7 @@ footer {
     border-radius: 20px;
     width: 90%;
     max-width: 500px;
-    /* max-height: 90vh; */
+    max-height: 90vh;
     overflow-y: auto;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(180, 200, 232, 0.2);
@@ -913,6 +913,24 @@ footer {
     
     .method-icon {
         align-self: center;
+    }
+    
+    .modal {
+        top: 10px !important;
+    }
+
+    .modal-content {
+        background: linear-gradient(135deg, #1b2d3e 0%, #15293d 50%, #1e3a52 100%);
+        margin: 5% auto;
+        padding: 0;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 500px;
+        max-height: auto !important;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(180, 200, 232, 0.2);
+        animation: slideIn 0.3s ease;
     }
 }
 
