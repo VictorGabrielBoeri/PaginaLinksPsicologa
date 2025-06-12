@@ -12,7 +12,7 @@ const links = {};
 
 function customizePage() {
     // Atualizar links
-    links.whatsapp = `https://wa.me/${config.socialLinks.whatsapp}?text=Olá! Gostaria de solicitar um orçamento.`;
+    links.whatsapp = `https://wa.me/${config.socialLinks.whatsapp}`;
     links.instagram = `https://instagram.com/${config.socialLinks.instagram}`;
     links.portfolio = config.socialLinks.portfolio;
 }
